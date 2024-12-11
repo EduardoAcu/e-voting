@@ -27,7 +27,7 @@ class RegistrationForm(FormSettings):
       formEmail = self.cleaned_data['email'].lower()
 
       domain = formEmail.split('@')[1]
-      domain_list = ["inacap.cl"]
+      domain_list = ["inacapmail.cl"]
       if domain not in domain_list:
          raise forms.ValidationError("Por favor ingrese el correo electrónico institucional")
       if self.instance.pk is None: 
@@ -55,16 +55,16 @@ class RegistrationForm(FormSettings):
       model = Account
       fields = ['last_name', 'first_name', 'email', 'department', 'password',]
       department_choices = (
-         ('CEITSS','CEITSS'),
-         ('CTE','CTE'),
-         ('CAS','CAS'),
-         ('COT','COT'),
+         ('Ingenieria Informatica','Ingenieria Informatica'),
+         ('Analista Programador','Analista Programador'),
+         ('Ingenieria en Ciberseguridad','Ingenieria en Ciberseguridad'),
+         ('Tecnico en Telecomunicaciones','Tecnico en Telecomunicaciones'),
       )
       widgets = {
-      'last_name':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'Last name' }),
-      'first_name':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'First Name' }),
-      'password': forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control', 'placeholder':'Password' }),
-      'email': forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'placeholder':'Email' }),
+      'last_name':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'Apellidos' }),
+      'first_name':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'Nombre' }),
+      'password': forms.PasswordInput(attrs={'type': 'password', 'class': 'form-control', 'placeholder':'Contraseña' }),
+      'email': forms.TextInput(attrs={'type': 'email', 'class': 'form-control', 'placeholder':'Correo Electronico' }),
       'department': forms.Select(attrs={'class': 'form-control', }),
       }      
 
@@ -87,13 +87,13 @@ class UpdateProfileForm(FormSettings):
       formEmail = self.cleaned_data['email'].lower()
 
       domain = formEmail.split('@')[1]
-      domain_list = ["inacap.cl"]
+      domain_list = ["inacapmail.cl"]
       if domain not in domain_list:
          raise forms.ValidationError("Por favor ingrese el correo electrónico institucional")
       if self.instance.pk is None: 
          if Account.objects.filter(email=formEmail).exists():
                raise forms.ValidationError(
-                  "The given email is already registered")
+                  "El correo electrónico indicado ya está registrado")
       else:  # Update
          dbEmail = self.Meta.model.objects.get(
                id=self.instance.pk).email.lower()

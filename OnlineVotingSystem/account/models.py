@@ -19,8 +19,8 @@ class AccountManager(UserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("last_name", "SNSU")
-        extra_fields.setdefault("first_name", "Administrator")
+        extra_fields.setdefault("last_name", " ")
+        extra_fields.setdefault("first_name", "Administrador")
 
         assert extra_fields["is_staff"]
         assert extra_fields["is_superuser"]
@@ -31,10 +31,10 @@ class Account(AbstractUser):
     username = None  
     email = models.EmailField(unique=True)
     department = models.TextField(choices=(
-        ('CEIT','CEIT'),
-        ('CTE','CTE'),
-        ('CAS','CAS'),
-        ('COT','COT'),
+         ('Ingenieria Informatica','Ingenieria Informatica'),
+         ('Analista Programador','Analista Programador'),
+         ('Ingenieria en Ciberseguridad','Ingenieria en Ciberseguridad'),
+         ('Tecnico en Telecomunicaciones','Tecnico en Telecomunicaciones'),
         ), null=True)
     otp = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)

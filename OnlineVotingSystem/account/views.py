@@ -7,54 +7,36 @@ from django.conf import settings
 import sweetify
 import random as r
 import smtplib
+from datetime import date
 
 
 
 def landingpage(request):
-    if votingschedule.objects.filter(department='CEIT').exists():
-        ceit = votingschedule.objects.get(department='CEIT') 
-    else:
-        ceit = 'No Schedule'
-
-    if votingschedule.objects.filter(department='CTE').exists():
-        cte = votingschedule.objects.get(department='CTE') 
-    else:
-        cte = 'No Schedule'
-
-    if votingschedule.objects.filter(department='CAS').exists():
-        cas = votingschedule.objects.get(department='CAS') 
-    else:
-        cas = 'No Schedule'
-
-    if votingschedule.objects.filter(department='COT').exists():
-        cot = votingschedule.objects.get(department='COT') 
-    else:
-        cot = 'No Schedule'
-    if votingschedule.objects.filter(department='Main').exists():
-        main = votingschedule.objects.get(department='Main') 
-    else:
-        main = 'No Schedule'
-    if votingschedule.objects.all().exists():
-        schedules = votingschedule.objects.all()
-    else:
-        schedules = []
-    context = {
-        'ceit': ceit,
-        'cte': cte,
-        'cas': cas,
-        'cot': cot,
-        'main': main,
-        'today': datetime.date.today(),
-        'schedules': schedules
+    departments = ['Ingenieria Informatica', 'Analista Programador', 'Ingenieria en Ciberseguridad', 'Tecnico en Telecomunicaciones', 'Main']
+    schedules = votingschedule.objects.all()
+    
+    # Generar el contexto dinámicamente
+    department_schedules = {
+        department.lower(): votingschedule.objects.filter(department=department).first() or 'Sin horario'
+        for department in departments
     }
+
+    context = {
+        **department_schedules,  # Desempaquetar los horarios de departamentos
+        'today': date.today(),
+        'schedules': schedules if schedules.exists() else []
+    }
+
     return render(request, 'account/landingpage.html', context)
 
 
 def generate_otp():
-    otp = ""
-    for i in range(r.randint(5, 8)):
-        otp += str(r.randint(1, 9))
+    # Generar un OTP con longitud entre 5 y 8, incluyendo el 0 como dígito válido
+    length = r.randint(5, 8)
+    otp = ''.join(str(r.randint(0, 9)) for _ in range(length))
     return otp
+
+print(generate_otp())  # Ejemplo de salida: '83425' o '1928376'
 
 
 def login_view(request):
@@ -66,10 +48,10 @@ def login_view(request):
             if settings.OTP:
                 login(request, user)
                 if user.verified:
-                    sweetify.success(request, 'Login Successfully')
+                    sweetify.success(request, 'Inicio sesión exitosamente')
                     return HttpResponseRedirect(reverse('home'))
                 elif user.is_superuser:
-                    sweetify.success(request, 'Login Successfully')
+                    sweetify.success(request, 'Inicio sesión exitosamente')
                     return HttpResponseRedirect(reverse('dashboard'))
                 elif not user.verified:
                     login(request, user)
@@ -90,21 +72,21 @@ def login_view(request):
                         SERVER.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, MESSAGE)
                     except:
                         return HttpResponseRedirect(reverse('verify'))
-                    sweetify.success(request, 'Check your email for verification')
+                    sweetify.success(request, 'Revisa tu correo electrónico para verificación')
                     return HttpResponseRedirect(reverse('verify'))
             else:
                 #Bypass OTP
                 login(request, user)
                 user = request.user
                 user.verified = True
-                Receipt.objects.create(owner=user, department="Main Branch")
+                Receipt.objects.create(owner=user, department="Carrera")
                 Receipt.objects.create(owner=user, department=user.department)
                 user.save()
-                sweetify.success(request, 'Login Successfully')
+                sweetify.success(request, 'Inicio sesión exitosamente')
                 return HttpResponseRedirect(reverse('home'))
         else:
-            sweetify.error(request, 'Invalid Credentials')
-            return render(request, 'account/login.html', {'error': 'Invalid Credentials'})
+            sweetify.error(request, 'Credenciales inválidas')
+            return render(request, 'account/login.html', {'error': 'Credenciales inválidas'})
     return render(request, 'account/login.html')
 
 
@@ -122,13 +104,13 @@ def verify(request):
             user = request.user
             user.verified = True
             Receipt.objects.create(owner=user, department=user.department)
-            Receipt.objects.create(owner=user, department='Main Branch')
+            Receipt.objects.create(owner=user, department='Carrera')
             user.save()
             sweetify.success(request, 'Login Successfully')
             return HttpResponseRedirect(reverse('home'))
         else:
             print("failed")
-            return render(request, 'account/verify.html', {'error': 'OTP is incorrect!', 'otp_form': otp_form})
+            return render(request, 'account/verify.html', {'error': 'La OTP es incorrecta!', 'otp_form': otp_form})
 
     return render(request, 'account/verify.html', context)
 
@@ -141,18 +123,18 @@ def register_view(request):
         password1 = request.POST['password']
         password2 = request.POST['password2']
         if password1 != password2:
-            sweetify.error(request, 'Password do not match!')
-            return render(request, 'account/register.html', {'error': 'Password do not match!', 'Registration_Form':Registration_Form})
+            sweetify.error(request, '¡La contraseña no coincide!')
+            return render(request, 'account/register.html', {'error': '¡La contraseña no coincide!', 'Registration_Form':Registration_Form})
         elif Registration_Form.is_valid():
             Registration_Form.save()
-            sweetify.success(request, 'Registration Successful')
+            sweetify.success(request, 'Registro exitoso')
             return HttpResponseRedirect(reverse('login'))
         elif Account.objects.filter(email=email).exists():
-            sweetify.error(request, 'Email already exist!')
-            return render(request, 'account/register.html', {'error': 'Email already exist!','Registration_Form':Registration_Form})
+            sweetify.error(request, '¡El correo electrónico ya existe!')
+            return render(request, 'account/register.html', {'error': '¡El correo electrónico ya existe!','Registration_Form':Registration_Form})
         else:
-            sweetify.error(request, 'Invalid Credentials')
-            return render(request, 'account/register.html', {'error': 'Invalid Credentials','Registration_Form':Registration_Form})
+            sweetify.error(request, 'Credenciales inválidas')
+            return render(request, 'account/register.html', {'error': 'Credenciales inválidas','Registration_Form':Registration_Form})
     return render(request, 'account/register.html', {'Registration_Form':Registration_Form})
 
 

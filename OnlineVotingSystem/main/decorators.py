@@ -24,7 +24,7 @@ def receipt_exist(function):
         if Receipt.objects.filter(owner=profile):
              return function(request, *args, **kwargs)
         else:
-            sweetify.error(request, "You don't have a voting receipt yet")
+            sweetify.error(request, "Aún no tienes un recibo de votación")
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
   return wrap
@@ -47,7 +47,7 @@ def department_not_voted_or_superuser(function):
           if not profile.voted_department or profile.is_superuser:
                return function(request, *args, **kwargs)
           else:
-               sweetify.error(request, 'You have already voted!')
+               sweetify.error(request, '¡Ya has votado!')
                return HttpResponseRedirect(reverse('receipt'))
      return wrap
 
@@ -59,7 +59,7 @@ def main_not_voted_or_superuser(function):
           if not profile.voted_main or profile.is_superuser:
                return function(request, *args, **kwargs)
           else:
-               sweetify.error(request, 'You have already voted!')
+               sweetify.error(request, '¡Ya has votado!')
                return HttpResponseRedirect(reverse('receipt'))
      return wrap
 
@@ -87,10 +87,10 @@ def ceit_schedule_or_superuser(function):
                if today >= start and today <= end or request.user.is_superuser:
                     return function(request, *args, **kwargs)
                else:
-                    sweetify.error(request, 'Kindly wait for the schedule!')
+                    sweetify.error(request, '¡Por favor espere el horario!')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
           except:
-               sweetify.error(request, 'There is no schedule posted yet!')
+               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap
 
@@ -119,10 +119,10 @@ def cte_schedule_or_superuser(function):
                if today >= start and today <= end or request.user.is_superuser:
                     return function(request, *args, **kwargs)
                else:
-                    sweetify.error(request, 'Kindly wait for the schedule!')
+                    sweetify.error(request, '¡Por favor espere el horario!')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
           except:
-               sweetify.error(request, 'There is no schedule posted yet!')
+               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap
 
@@ -151,10 +151,10 @@ def cas_schedule_or_superuser(function):
                if today >= start and today <= end or request.user.is_superuser:
                     return function(request, *args, **kwargs)
                else:
-                    sweetify.error(request, 'Kindly wait for the schedule!')
+                    sweetify.error(request, '¡Por favor espere el horario!')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
           except:
-               sweetify.error(request, 'There is no schedule posted yet!')
+               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap
 
@@ -183,10 +183,10 @@ def cot_schedule_or_superuser(function):
                if today >= start and today <= end or request.user.is_superuser:
                     return function(request, *args, **kwargs)
                else:
-                    sweetify.error(request, 'Kindly wait for the schedule!')
+                    sweetify.error(request, '¡Por favor espere el horario!')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
           except:
-               sweetify.error(request, 'There is no schedule posted yet!')
+               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap
 
@@ -204,9 +204,9 @@ def main_schedule_or_superuser(function):
                if today >= start and today <= end or request.user.is_superuser:
                     return function(request, *args, **kwargs)
                else:
-                    sweetify.error(request, 'Kindly wait for the schedule!')
+                    sweetify.error(request, '¡Por favor espere el horario!')
                     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
           except:
-               sweetify.error(request, 'There is no schedule posted yet!')
+               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap

@@ -1,10 +1,3 @@
-/**
-* Template Name: FlexStart - v1.9.0
-* Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -208,7 +201,7 @@ section {
   font-family: "Nunito", sans-serif;
   font-size: 16px;
   font-weight: 700;
-  color: #2D652C;
+  color: black;
   white-space: nowrap;
   transition: 0.3s;
 }
@@ -221,7 +214,7 @@ section {
   color: #08DA4E;
 }
 .navbar .getstarted, .navbar .getstarted:focus {
-  background: #225D21;
+  background: red;
   padding: 8px 20px;
   margin-left: 30px;
   border-radius: 4px;
@@ -229,7 +222,7 @@ section {
 }
 .navbar .getstarted:hover, .navbar .getstarted:focus:hover {
   color: #fff;
-  background: #2D652C;
+  background: red;
 }
 .navbar .dropdown ul {
   display: block;
