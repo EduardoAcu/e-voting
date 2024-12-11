@@ -18,7 +18,7 @@ class RegistrationForm(FormSettings):
          for field in RegistrationForm.Meta.fields:
             self.fields[field].initial = instance.get(field)
          if self.instance.pk is not None:
-            self.fields['password'].widget.attrs['placeholder'] = "Fill this only if you wish to update password"
+            self.fields['password'].widget.attrs['placeholder'] = "Complete esto solo si desea actualizar la contraseña"
          else:
             self.fields['first_name'].required = True
             self.fields['last_name'].required = True
@@ -27,20 +27,20 @@ class RegistrationForm(FormSettings):
       formEmail = self.cleaned_data['email'].lower()
 
       domain = formEmail.split('@')[1]
-      domain_list = ["ssct.edu.ph"]
+      domain_list = ["inacap.cl"]
       if domain not in domain_list:
-         raise forms.ValidationError("Please enter ssct gsuite email")
+         raise forms.ValidationError("Por favor ingrese el correo electrónico institucional")
       if self.instance.pk is None: 
          if Account.objects.filter(email=formEmail).exists():
                raise forms.ValidationError(
-                  "The given email is already registered")
+                  "El correo electrónico indicado ya está registrado")
       else:  # Update
          dbEmail = self.Meta.model.objects.get(
                id=self.instance.pk).email.lower()
          if dbEmail != formEmail:  # There has been changes
                if Account.objects.filter(email=formEmail).exists():
                   raise forms.ValidationError(
-                     "The given email is already registered")
+                     "El correo electrónico indicado ya está registrado")
       return formEmail
 
    def clean_password(self):
@@ -78,7 +78,7 @@ class UpdateProfileForm(FormSettings):
          for field in UpdateProfileForm.Meta.fields:
             self.fields[field].initial = instance.get(field)
          if self.instance.pk is not None:
-            self.fields['password'].widget.attrs['placeholder'] = "Fill this only if you wish to update password"
+            self.fields['password'].widget.attrs['placeholder'] = "Complete esto solo si desea actualizar la contraseña"
          else:
             self.fields['first_name'].required = True
             self.fields['last_name'].required = True
@@ -87,9 +87,9 @@ class UpdateProfileForm(FormSettings):
       formEmail = self.cleaned_data['email'].lower()
 
       domain = formEmail.split('@')[1]
-      domain_list = ["ssct.edu.ph"]
+      domain_list = ["inacap.cl"]
       if domain not in domain_list:
-         raise forms.ValidationError("Please enter ssct gsuite email")
+         raise forms.ValidationError("Por favor ingrese el correo electrónico institucional")
       if self.instance.pk is None: 
          if Account.objects.filter(email=formEmail).exists():
                raise forms.ValidationError(
@@ -100,7 +100,7 @@ class UpdateProfileForm(FormSettings):
          if dbEmail != formEmail:  # There has been changes
                if Account.objects.filter(email=formEmail).exists():
                   raise forms.ValidationError(
-                     "The given email is already registered")
+                     "El correo electrónico indicado ya está registrado")
       return formEmail
 
    def clean_password(self):
