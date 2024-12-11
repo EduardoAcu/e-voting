@@ -5,7 +5,7 @@
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                    <h1 class="h3 mb-2 text-primary font-weight-bolder text-center">Settings</h1><br>
+                    <h1 class="h3 mb-2 text-primary font-weight-bolder text-center">Configuraciones</h1><br>
 
                 <div class="row" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out">
 
@@ -15,12 +15,12 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h4 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            Instruction
+                                            Instrucciones
                                         </div>
                                         <div class="help">
                                             <ul class="text-left">
-                                                <li>Reset button will reset the election tally and result.</li>
-                                                <li>Delete button will delete all candidates.</li>
+                                                <li>El botón de reinicio restablecerá el recuento y el resultado de las elecciones..</li>
+                                                <li>El botón Eliminar eliminará todos los candidatos..</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -36,19 +36,19 @@
                                     <div class="col mr-2">
                                         
                                         <div class="h5 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            Main Branch
+                                            Ingenieria Informatica
                                         </div>
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="reset_main" value="reset_main" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reset </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="delete_main" value="delete_main" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Delete </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar</button>
                                             </form>
                                         </div>
                                     </div>
@@ -64,19 +64,19 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            CEIT Department
+                                            Analista Programador
                                         </div>
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="reset_ceit" value="reset_ceit" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reset </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="delete_ceit" value="delete_ceit" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Delete </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar </button>
                                             </form>
                                         </div>
                                     </div>
@@ -91,19 +91,19 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            CTE Department
+                                            Ingenieria Ciberseguridad
                                         </div>
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="reset_cte" value="reset_cte" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reset </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="delete_cte" value="delete_cte" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Delete </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar </button>
                                             </form>
                                         </div>
                                     </div>
@@ -119,19 +119,19 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            CAS Department
+                                            Tecnico Telecomunicaciones
                                         </div>
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="reset_cas" value="reset_cas" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reset </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="delete_cas" value="delete_cas" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Delete </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar </button>
                                             </form>
                                         </div>
                                     </div>
@@ -146,19 +146,19 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="h5 font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                            COT Department
+                                            Diseño Digital y Web
                                         </div>
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="reset_cot" value="reset_cot" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reset </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
                                                 <input type="text" name="delete_cot" value="delete_cot" hidden>
-                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Delete </button>
+                                                <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar </button>
                                             </form>
                                         </div>
                                     </div>

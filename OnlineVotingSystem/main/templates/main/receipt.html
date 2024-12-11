@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container-fluid">
     <div class="text-center"> 
-        <h1 class="h3 mb-2 text-primary font-weight-bolder">Voting Receipt</h1><br>
+        <h1 class="h3 mb-2 text-primary font-weight-bolder">Recibo de votación</h1><br>
     </div>
 
     <div class="row">
@@ -20,15 +20,15 @@
                                 <table class="table table-bordered receipt_table" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <td>Date: {{ receipt.created_at }} <b></b></td>
+                                            <td>Fecha: {{ receipt.created_at }} <b></b></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Department: <b>{{ receipt.department }}</b> </td>
+                                            <td>Carrera: <b>{{ receipt.department }}</b> </td>
                                         </tr>
                                         <tr>
-                                            <td>Name: <b>{{ receipt.owner }}</b> </td>
+                                            <td>Nombre: <b>{{ receipt.owner }}</b> </td>
                                         </tr>
                                         <tr>
                                             <td>

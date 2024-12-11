@@ -4,13 +4,13 @@
 
 
 <div class="container w-50 text-center">
-    <p> Are you sure to delete <b style="color: red;"> {{ schedule }} </b> Schedule? </p>
+    <p> ¿Estás seguro de eliminar el cronograma  <b style="color: red;"> {{ schedule }} </b>? </p>
     <form method="POST" action="">
         {% csrf_token %}
 
 
-    <input class="btn btn-danger mt-3" type="submit" value="Delete">
-    <a href="{% url 'electionschedule' %}" class="btn btn-light mt-3" > Cancel </a>
+    <input class="btn btn-danger mt-3" type="submit" value="Eliminar">
+    <a href="{% url 'electionschedule' %}" class="btn btn-light mt-3" > Cancelar </a>
     </form>
 </div>
 

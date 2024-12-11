@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -10,11 +10,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SNSU COMELEC | {{ title }}</title>
+    <title>Sistema de Votación | {{ title }}</title>
 
-    <link rel="icon" type="image/x-icon" href="{% static 'sb_admin/img/favicon.ico' %}" />
+    <link rel="icon" type="image/x-icon" href="{% static 'sb_admin/img/favicon2.ico' %}" />
     <meta property="og:image" content="{% static 'snsu.jpg' %}" />
-    <meta name="description" content="A capstone project for SNSU SSG ELECTION made by Fermilan, Christian Jhegg & Rivero, Winonna Jane">
+    <meta name="description" content="">
 
 
     <!-- AOS -->
@@ -47,79 +47,70 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
             <div class="sidebar-brand-icon">
-                <img width="40px" src="{% static 'sb_admin/img/logo.png' %}">
+                <img width="75px" src="{% static 'sb_admin/img/logo2.png' %}">
             </div>
-            <div class="sidebar-brand-text mx-2">SNSU COMELEC</div>
+            <div class="sidebar-brand-text mx-2">Sistema de Votación</div>
         </a>
 
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
-            Homepage
+            Pagina Principal
         </div>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">
                 <i class="fa-solid fa-house"></i>
-                <span>Home</span></a>
+                <span>Inicio</span></a>
         </li>
         <hr class="sidebar-divider">
-
         <!-- Heading -->
         <div class="sidebar-heading">
-            MAIN BRANCH
+            Carreras
         </div>
 
         <li class="nav-item">
             <a class="nav-link" href="{% url 'mainssg' %}">
                 <i class="fa-solid fa-people-line"></i>
-                <span>Main SSG</span></a>
+                <span>Ingenieria Informatica</span></a>
         </li>
-
-
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            LEGISLATIVE BRANCH
-        </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         {% if request.user.department == 'CEIT' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'ceitballot' %}">
                 <i class="fa-solid fa-helmet-safety"></i>
-                <span>CEIT Department</span></a>
+                <span>Analista Programador</span></a>
         </li>
         {% endif %}
         {% if request.user.department == 'CTE' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'cteballot' %}">
                 <i class="fa-solid fa-chalkboard-user"></i>
-                <span>CTE Department</span></a>
+                <span>Ingenieria Ciberseguridad</span></a>
         </li>
         {% endif %}
         {% if request.user.department == 'CAS' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'casballot' %}">
                 <i class="fa-solid fa-atom"></i>
-                <span>CAS Department</span></a>
+                <span>Tecnico Telecomunicaciones</span></a>
         </li>
         {% endif %}
         {% if request.user.department == 'COT' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'cotballot' %}">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>COT Department</span></a>
+                <span>Diseño Digital y Web</span></a>
         </li>
         {% endif %}
         {% if not request.user.is_superuser %}
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
-            Voting Receipt
+            Recibo de votación
         </div>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'receipt' %}">
                 <i class="fa-solid fa-receipt"></i>
-                <span>Receipt</span></a>
+                <span>Recibo</span></a>
         </li>
         {% endif %}
         <!-- Nav Item - Pages Collapse Menu -->
@@ -129,7 +120,7 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Admin Pannel
+            Panel de administración
         </div>
 
 
@@ -137,32 +128,32 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard' %}">
                 <i class="fa fa-dashboard fa-fw"></i>
-                <span>Dashboard</span></a>
+                <span>Panel</span></a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{% url 'voters' %}">
                 <i class="fa-solid fa-people-group"></i>
-                <span>Voters</span></a>
+                <span>Votantes</span></a>
         </li>
 
 
         <li class="nav-item">
             <a class="nav-link" href="{% url 'electionschedule' %}">
                 <i class="fa-regular fa-calendar-days"></i>
-                <span>Election Schedule</span></a>
+                <span>Calendario electoral</span></a>
         </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                 <i class="fa-solid fa-people-line"></i>
-                <span>Main SSG</span>
+                <span>Ingenieria Informatica</span>
             </a>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'mainssgcandidates' %}">Main SSG Candidates</a>
-                    <a class="collapse-item" href="{% url 'mainssgtally' %}">Main SSG Tally</a>
-                    <a class="collapse-item" href="{% url 'mainssgresult' %}">Main SSG Result</a>
+                    <a class="collapse-item" href="{% url 'mainssgcandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'mainssgtally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'mainssgresult' %}">Resultados</a>
                 </div>
             </div>
         </li>
@@ -171,13 +162,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <i class="fa-solid fa-helmet-safety"></i>
-                <span>CEIT Department</span>
+                <span>Analista Programador</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'ceitcandidates' %}">CEIT Candidates</a>
-                    <a class="collapse-item" href="{% url 'ceittally' %}">CEIT Tally</a>
-                    <a class="collapse-item" href="{% url 'ceitresult' %}">CEIT Result</a>
+                    <a class="collapse-item" href="{% url 'ceitcandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'ceittally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'ceitresult' %}">Resultados</a>
                 </div>
             </div>
         </li>
@@ -186,13 +177,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                 <i class="fa-solid fa-chalkboard-user"></i>
-                <span>CTE Department</span>
+                <span>Ingenieria Ciberseguridad</span>
             </a>
             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'ctecandidates' %}">CTE Candidates</a>
-                    <a class="collapse-item" href="{% url 'ctetally' %}">CTE Tally</a>
-                    <a class="collapse-item" href="{% url 'cteresult' %}">CTE Result</a>
+                    <a class="collapse-item" href="{% url 'ctecandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'ctetally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'cteresult' %}">Resultados</a>
                 </div>
             </div>
         </li>
@@ -201,13 +192,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                 <i class="fa-solid fa-atom"></i>
-                <span>CAS Department</span>
+                <span>Tecnico Telecomunicaciones</span>
             </a>
             <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'cascandidates' %}">CAS Candidates</a>
-                    <a class="collapse-item" href="{% url 'castally' %}">CAS Tally</a>
-                    <a class="collapse-item" href="{% url 'casresult' %}">CAS Result</a>
+                    <a class="collapse-item" href="{% url 'cascandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'castally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'casresult' %}">Resultados</a>
                 </div>
             </div>
         </li>
@@ -216,13 +207,13 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                 <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>COT Department</span>
+                <span>Diseño Digital y Web</span>
             </a>
             <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'cotcandidates' %}">COT Candidates</a>
-                    <a class="collapse-item" href="{% url 'cottally' %}">COT Tally</a>
-                    <a class="collapse-item" href="{% url 'cotresult' %}">COT Result</a>
+                    <a class="collapse-item" href="{% url 'cotcandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'cottally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'cotresult' %}">Resultados</a>
                 </div>
             </div>
         </li>
@@ -230,16 +221,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'settings' %}">
                 <i class="fa-solid fa-gears"></i>
-                <span>Settings</span></a>
+                <span>Configuraciones</span></a>
         </li>
         {% endif %}
-
-    <!-- <hr class="sidebar-divider d-none d-md-block">
-
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div> -->
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -276,12 +260,12 @@
                             aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="{% url 'profile' request.user.id %}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
+                                Perfil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
+                                Cerrar Sesión
                             </a>
                         </div>
                     </li>
@@ -304,7 +288,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <b><span>Copyright &copy; <a class="primary" href=""> SNSU COMELEC </a> | All Rights Reserved 2022</span></b>
+                    <b><span>Copyright &copy; <a class="primary" href=""> Sistema de Votación </a> | All Rights Reserved 2024</span></b>
                 </div>
             </div>
         </footer>
@@ -327,15 +311,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">¿Salir de tu Cuenta?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesión</a>
             </div>
         </div>
     </div>

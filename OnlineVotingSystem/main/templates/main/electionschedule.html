@@ -5,23 +5,23 @@
 
 <div class="container-fluid">
     <div style="display: flex;"> 
-        <h1 class="h3 mb-2 text-primary font-weight-bolder">Election Schedule</h1><br>
-        <a class="ml-auto btn btn-primary mb-3" data-toggle="modal" data-target="#Addmodal">Add</a>
+        <h1 class="h3 mb-2 text-primary font-weight-bolder">Calendario electoral</h1><br>
+        <a class="ml-auto btn btn-primary mb-3" data-toggle="modal" data-target="#Addmodal">Añadir</a>
     </div>
 
     <div class="card shadow mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary text-center">Election Schedule Table</h6>
+            <h6 class="m-0 font-weight-bold text-primary text-center">Tabla de calendario electoral</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Department</th>
-                            <th>Election Starts</th>
-                            <th>Election Ends</th>
-                            <th class="text-center">Action</th>
+                            <th>Carrera</th>
+                            <th>Comienzan las elecciones</th>
+                            <th>Terminan las elecciones</th>
+                            <th class="text-center">Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,7 +48,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Schedule</b></h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar horario</b></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -57,21 +57,21 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label>Department</label>
+                        <label>Carrera</label>
                         {{ schedule_form.department }}
                     </div>
                     <div class="form-group">
-                        <label>Election Starts:</label>
+                        <label>Comienzan las elecciones:</label>
                         {{ schedule_form.start }}
                     </div>
                     <div class="form-group">
-                        <label>Election Ends:</label>
+                        <label>Terminan las elecciones:</label>
                         {{ schedule_form.end }}
                     </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" type="submit">Confirm</button>
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit">Confirmar</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
             </form>
             </div>
         </div>

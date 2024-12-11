@@ -4,11 +4,11 @@
 {% block body %}
 
 <div class="container"> 
-    <h1 class="h3 mb-2 text-primary text-center font-weight-bolder">Update {{ voter.email }}</h1><br>
+    <h1 class="h3 mb-2 text-primary text-center font-weight-bolder">Actualizar {{ voter.email }}</h1><br>
 <form action="" method="POST" class="user" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="form-group" >
-        <label> <b> Email </b> </label>
+        <label> <b> Correo </b> </label>
         {{ form.email }}
     </div>
     <div class="form-group">
@@ -16,20 +16,20 @@
         {{ form.department }}
     </div>
     <div class="form-group">
-        <label> <b> Firstname </b> </label>
+        <label> <b> Nombres </b> </label>
         {{ form.first_name }}
     </div>
     <div class="form-group">
-        <label> <b> Lastname </b> </label>
+        <label> <b> Apellidos </b> </label>
         {{ form.last_name }}
     </div>
     <div class="form-group">
-        <label> <b> Password </b> </label>
+        <label> <b> Contraseña </b> </label>
         {{ form.password }}
     </div>
    <div class="d-flex justify-content-center">
-   <input type="submit" value="Save" class="btn btn-primary btn-user  w-25">
-   <a href="{% url 'mainssgcandidates' %}" class="ml-3 btn btn-secondary btn-user  w-25">Cancel</a>
+   <input type="submit" value="Guardar" class="btn btn-primary btn-user  w-25">
+   <a href="{% url 'mainssgcandidates' %}" class="ml-3 btn btn-secondary btn-user  w-25">Cancelar</a>
    </div>
 </form>
 </div>

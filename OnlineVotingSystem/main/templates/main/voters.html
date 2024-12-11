@@ -3,26 +3,25 @@
 {% block body %}
 <div class="container-fluid" >
     <div class="text-center"> 
-        <h1 class="h3 mb-2 text-primary font-weight-bolder">Voters</h1><br>
+        <h1 class="h3 mb-2 text-primary font-weight-bolder">Votantes</h1><br>
     </div>
 
 
     <div class="card shadow mb-4" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary text-center">Voters Information Table</h6>
+            <h6 class="m-0 font-weight-bold text-primary text-center">Tabla de información para votantes</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered tally-table" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Email</th>
-                            <th>Full Name</th>
-                            <th>Deparment</th>
-                            <th>Verification Status</th>
-                            <th>Main Branch Voting Status</th>
-                            <th>Department Voting Status</th>
-                            <th>Action</th>
+                            <th>Correo</th>
+                            <th>Nombre Completo</th>
+                            <th>Carrera</th>
+                            <th>Estado de verificación</th>
+                            <th>Estado de votación</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,9 +30,8 @@
                             <td> {{ voter.email }} </td>
                             <td> {{ voter.last_name }}, {{ voter.first_name }}</td>
                             <td> {{ voter.department }} </td>
-                            <td class="text-center"> {% if voter.verified %} <div class="badge bg-primary text-white rounded-pill">Verified</div> {% else %} <div class="badge text-white bg-warning rounded-pill">Pending</div> {% endif %}</td>
-                            <td class="text-center"> {% if voter.voted_main %} <div class="badge bg-primary text-white rounded-pill">Voted</div> {% else %} <div class="badge text-white bg-warning rounded-pill">Pending</div> {% endif %}</td>
-                            <td class="text-center"> {% if voter.voted_department %} <div class="badge bg-primary text-white rounded-pill">Voted</div> {% else %} <div class="badge text-white bg-warning rounded-pill">Pending</div> {% endif %}</td>
+                            <td class="text-center"> {% if voter.verified %} <div class="badge bg-primary text-white rounded-pill">Verificado</div> {% else %} <div class="badge text-white bg-warning rounded-pill">Pendiente</div> {% endif %}</td>
+                            <td class="text-center"> {% if voter.voted_main %} <div class="badge bg-primary text-white rounded-pill">Votado</div> {% else %} <div class="badge text-white bg-warning rounded-pill">Pendiente</div> {% endif %}</td>
                             <td class="text-center">  
                                 <a href="{% url 'updatevoter' voter.id %}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
                                 <a href="{% url 'deletevoter' voter.id %}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>

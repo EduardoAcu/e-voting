@@ -51,7 +51,7 @@ class MAINSSG_Candidate(models.Model):
         if self.photo and hasattr(self.photo, 'url'):
             return self.photo.url
         else:
-            return "/static/sb_admin/img/user.png"
+            return "/static/sb_admin/img/user3.png"
     
     def __str__(self):
         return f"{self.fullname}"

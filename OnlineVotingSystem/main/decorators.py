@@ -190,9 +190,6 @@ def cot_schedule_or_superuser(function):
                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
      return wrap
 
-
-
-
 def main_schedule_or_superuser(function):
      @wraps(function)
      def wrap(request, *args, **kwargs):
