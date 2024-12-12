@@ -81,27 +81,7 @@
                 <span>Analista Programador</span></a>
         </li>
         {% endif %}
-        {% if request.user.department == 'CTE' or request.user.is_superuser %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cteballot' %}">
-                <i class="fa-solid fa-chalkboard-user"></i>
-                <span>Ingenieria Ciberseguridad</span></a>
-        </li>
-        {% endif %}
-        {% if request.user.department == 'CAS' or request.user.is_superuser %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'casballot' %}">
-                <i class="fa-solid fa-atom"></i>
-                <span>Tecnico Telecomunicaciones</span></a>
-        </li>
-        {% endif %}
-        {% if request.user.department == 'COT' or request.user.is_superuser %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cotballot' %}">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>Diseño Digital y Web</span></a>
-        </li>
-        {% endif %}
+
         {% if not request.user.is_superuser %}
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
@@ -169,51 +149,6 @@
                     <a class="collapse-item" href="{% url 'ceitcandidates' %}">Candidatos</a>
                     <a class="collapse-item" href="{% url 'ceittally' %}">Votos Totales</a>
                     <a class="collapse-item" href="{% url 'ceitresult' %}">Resultados</a>
-                </div>
-            </div>
-        </li>
-
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                <i class="fa-solid fa-chalkboard-user"></i>
-                <span>Ingenieria Ciberseguridad</span>
-            </a>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
-                <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'ctecandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'ctetally' %}">Votos Totales</a>
-                    <a class="collapse-item" href="{% url 'cteresult' %}">Resultados</a>
-                </div>
-            </div>
-        </li>
-
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                <i class="fa-solid fa-atom"></i>
-                <span>Tecnico Telecomunicaciones</span>
-            </a>
-            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
-                <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'cascandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'castally' %}">Votos Totales</a>
-                    <a class="collapse-item" href="{% url 'casresult' %}">Resultados</a>
-                </div>
-            </div>
-        </li>
-
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-                <span>Diseño Digital y Web</span>
-            </a>
-            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
-                <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'cotcandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'cottally' %}">Votos Totales</a>
-                    <a class="collapse-item" href="{% url 'cotresult' %}">Resultados</a>
                 </div>
             </div>
         </li>

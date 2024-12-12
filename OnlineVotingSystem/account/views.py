@@ -12,7 +12,7 @@ from datetime import date
 
 
 def landingpage(request):
-    departments = ['Ingenieria Informatica', 'Analista Programador', 'Ingenieria en Ciberseguridad', 'Tecnico en Telecomunicaciones', 'Main']
+    departments = ['IEI','AP']
     schedules = votingschedule.objects.all()
     
     # Generar el contexto dinámicamente
@@ -106,7 +106,7 @@ def verify(request):
             Receipt.objects.create(owner=user, department=user.department)
             Receipt.objects.create(owner=user, department='Carrera')
             user.save()
-            sweetify.success(request, 'Login Successfully')
+            sweetify.success(request, 'Inicio sesión exitosamente')
             return HttpResponseRedirect(reverse('home'))
         else:
             print("failed")
