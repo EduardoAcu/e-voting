@@ -47,9 +47,8 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
             <div class="sidebar-brand-icon">
-                <img width="75px" src="{% static 'sb_admin/img/logo2.png' %}">
+                <img width="150px" src="{% static 'sb_admin/img/logo2.png' %}">
             </div>
-            <div class="sidebar-brand-text mx-2">Sistema de Votación</div>
         </a>
 
         <hr class="sidebar-divider">
@@ -132,7 +131,7 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
                     <a class="collapse-item" href="{% url 'mainssgcandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'mainssgtally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'mainssgtally' %}">Resumen</a>
                     <a class="collapse-item" href="{% url 'mainssgresult' %}">Resultados</a>
                 </div>
             </div>
@@ -147,7 +146,7 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
                     <a class="collapse-item" href="{% url 'ceitcandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'ceittally' %}">Votos Totales</a>
+                    <a class="collapse-item" href="{% url 'ceittally' %}">Resumen</a>
                     <a class="collapse-item" href="{% url 'ceitresult' %}">Resultados</a>
                 </div>
             </div>
