@@ -178,7 +178,7 @@ def dashboard(request):
 ############################################################################################################
 
 @user_passes_test(lambda u: u.is_superuser)
-def ceitcandidates(request):
+def apcandidates(request):
     candidate_form = AP_CandidatesForm()
     if request.method == 'POST':
         candidate_form = AP_CandidatesForm(request.POST, request.FILES)
@@ -187,59 +187,59 @@ def ceitcandidates(request):
             return HttpResponseRedirect(reverse("apcandidates"))
 
     context = {
-        'title': 'CEIT Candidates',
+        'title': 'Candidatos de Analista Progamador',
         'form': candidate_form,
         'ceit': AP_Candidate.objects.all()
     }
-    return render(request, 'main/ceitcandidates.html', context) 
+    return render(request, 'main/apcandidatos.html', context) 
 
 @user_passes_test(lambda u: u.is_superuser)
-def updateceitcandidate(request, pk):
+def updateapcandidate(request, pk):
     candidate = AP_Candidate.objects.get(id=pk)
     candidate_form = AP_CandidatesForm(instance=candidate)
     context = {
-                'title': 'Update CEIT Candidate',
+                'title': 'Actualizar Candidatos de Analista Programador',
                 'candidate_form': candidate_form
     }
     if request.method == 'POST':
         candidate_form = AP_CandidatesForm(request.POST, request.FILES, instance=candidate)
         if candidate_form.is_valid():
             candidate_form.save()
-            return HttpResponseRedirect(reverse('ceitcandidates'))
-    return render(request, 'main/ceitupdatecandidate.html', context)
+            return HttpResponseRedirect(reverse('apcandidates'))
+    return render(request, 'main/apupdatecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def deleteceitcandidate(request, pk):
-    ceitcandidate = AP_Candidate.objects.get(id=pk)
+def deleteapcandidate(request, pk):
+    apcandidate = AP_Candidate.objects.get(id=pk)
     context = {
-        'title': 'Delete CEIT Candidate',
-        'ceitcandidate': ceitcandidate,
+        'title': 'Eliminar Candidatos de Analista Programador',
+        'apcandidate': apcandidate,
     }
     if request.method == 'POST':
-        ceitcandidate.delete()
-        return HttpResponseRedirect(reverse('ceitcandidates'))
+        apcandidate.delete()
+        return HttpResponseRedirect(reverse('apcandidates'))
 
-    return render(request, 'main/ceitdeletecandidate.html', context)
+    return render(request, 'main/aptdeletecandidate.html', context)
 
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def ceittally(request):
+def apttally(request):
     context = {
-        'title': 'CEIT Tally',
+        'title': 'Resumen Total',
         'ceit': AP_Candidate.objects.all(),
     }
-    return render(request, 'main/ceittally.html', context)
+    return render(request, 'main/apttally.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def ceitresult(request):
+def apresult(request):
     context = {
-        'title': 'CEIT Result',
-        'governor': AP_Candidate.objects.filter(position='Governor'),
+        'title': 'Resultado de Analista Programador',
+        'delegado': AP_Candidate.objects.filter(position='Delegado Estudiantil'),
     }
-    return render(request, 'main/ceitresult.html', context)
+    return render(request, 'main/apresult.html', context)
 
 
 
@@ -250,31 +250,31 @@ def ceitresult(request):
 @ap_schedule_or_superuser
 def ceitballot(request):
     context = {
-        'title': 'CEIT Ballot',
-        'governor': AP_Candidate.objects.filter(position='Governor'),
+        'title': 'Boleta',
+        'delegado': AP_Candidate.objects.filter(position='Delegado Estudiantil'),
     }
     if request.method == 'POST':
         voter = request.user
         voter.voted_department = True
         voter.save()
-        sweetify.success(request, 'Vote Submitted!')
+        sweetify.success(request, '¡Votación enviada!')
 
 
     ###### GOVERNOR ######
     try: 
-        request.POST['governor']
-        voted_governor = request.POST["governor"]
+        request.POST['delegado']
+        voted_governor = request.POST["delegado"]
         g_voted = AP_Candidate.objects.get(fullname=voted_governor)
         g_voters = g_voted.voters
         g_voters.add(voter)
-        receipt = Receipt.objects.get(owner=voter, department='CEIT')
+        receipt = Receipt.objects.get(owner=voter, department='AP')
         receipt.governor = voted_governor
         receipt.save()
 
     except:
-        print("No selected Governor")
+        print("Ningún Delegado Estudinatil seleccionado")
     
-    return render(request, 'main/ceitballot.html', context)
+    return render(request, 'main/apballot.html', context)
     
 ###############################################################################################################################################################
 
@@ -322,7 +322,7 @@ def deletemainssgcandidate(request, pk):
         mainssgcandidate.delete()
         return HttpResponseRedirect(reverse('mainssgcandidates'))
 
-    return render(request, 'main/mainssgeletecandidate.html', context)
+    return render(request, 'main/mainssgdeletecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -368,7 +368,7 @@ def mainssgballot(request):
         g_voted = IEI_Candidate.objects.get(fullname=voted_governor)
         g_voters = g_voted.voters
         g_voters.add(voter)
-        receipt = Receipt.objects.get(owner=voter, department='Main Branch')
+        receipt = Receipt.objects.get(owner=voter, department='IEI')
         receipt.governor = voted_governor
         receipt.save()
 

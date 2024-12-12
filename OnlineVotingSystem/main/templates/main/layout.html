@@ -66,14 +66,16 @@
             Carreras
         </div>
 
+        {% if request.user.department == 'IEI' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'mainssg' %}">
                 <i class="fa-solid fa-people-line"></i>
                 <span>Ingenieria Informatica</span></a>
         </li>
-
+        {% endif %}
+        
         <!-- Nav Item - Pages Collapse Menu -->
-        {% if request.user.department == 'CEIT' or request.user.is_superuser %}
+        {% if request.user.department == 'AP' or request.user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link" href="{% url 'ceitballot' %}">
                 <i class="fa-solid fa-helmet-safety"></i>
