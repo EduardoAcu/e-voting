@@ -77,7 +77,7 @@
         <!-- Nav Item - Pages Collapse Menu -->
         {% if request.user.department == 'AP' or request.user.is_superuser %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'ceitballot' %}">
+            <a class="nav-link" href="{% url 'apballot' %}">
                 <i class="fa-solid fa-helmet-safety"></i>
                 <span>Analista Programador</span></a>
         </li>
@@ -147,9 +147,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'ceitcandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'ceittally' %}">Resumen</a>
-                    <a class="collapse-item" href="{% url 'ceitresult' %}">Resultados</a>
+                    <a class="collapse-item" href="{% url 'apcandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'aptally' %}">Resumen</a>
+                    <a class="collapse-item" href="{% url 'apresult' %}">Resultados</a>
                 </div>
             </div>
         </li>

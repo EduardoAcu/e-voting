@@ -347,11 +347,11 @@
         AOS.init();
     </script>
 
-    <!-- CEIT TIMER -->
-    {% if ceit.start > today %}
+    <!-- ap TIMER -->
+    {% if ap.start > today %}
     <script>
       
-    var CEIT_start_countDownDate = new Date("{{ ceit.start }} 00:01:00").getTime();
+    var AP_start_countDownDate = new Date("{{ ap.start }} 00:01:00").getTime();
       
       
       var x = setInterval(function() {
@@ -360,20 +360,20 @@
         var now = new Date().getTime();
           
       
-        var distance = CEIT_start_countDownDate - now;
+        var distance = AP_start_countDownDate - now;
           
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
           
-        document.getElementById("CEIT_start").innerHTML = days + "d " + hours + "h "
+        document.getElementById("AP_start").innerHTML = days + "d " + hours + "h "
         + minutes + "m " + seconds + "s ";
           
           
         if (distance < 0) {
           clearInterval(x);
-          document.getElementById("CEIT_start").innerHTML = "00d 00h 00m 00s";
+          document.getElementById("AP_start").innerHTML = "00d 00h 00m 00s";
         }
       }, 1000);
 
@@ -383,11 +383,11 @@
 
 
 
-{% if ceit.start == today %}
+{% if ap.start == today %}
 <script>
       
 
-    var CEIT_end_countDownDate = new Date("{{ ceit.end }} 23:59:00").getTime();
+    var AP_end_countDownDate = new Date("{{ ap.end }} 23:59:00").getTime();
 
       
       var x = setInterval(function() {
@@ -396,20 +396,20 @@
         var now = new Date().getTime();
           
       
-        var distance = CEIT_end_countDownDate - now;
+        var distance = AP_end_countDownDate - now;
           
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
           
-        document.getElementById("CEIT_end").innerHTML = days + "d " + hours + "h "
+        document.getElementById("AP_end").innerHTML = days + "d " + hours + "h "
         + minutes + "m " + seconds + "s ";
           
           
         if (distance < 0) {
           clearInterval(x);
-          document.getElementById("CEIT_end").innerHTML = "00d 00h 00m 00s";
+          document.getElementById("AP_end").innerHTML = "00d 00h 00m 00s";
         }
       }, 1000);
 

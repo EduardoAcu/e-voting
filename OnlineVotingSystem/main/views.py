@@ -189,9 +189,9 @@ def apcandidates(request):
     context = {
         'title': 'Candidatos de Analista Progamador',
         'form': candidate_form,
-        'ceit': AP_Candidate.objects.all()
+        'ap': AP_Candidate.objects.all()
     }
-    return render(request, 'main/apcandidatos.html', context) 
+    return render(request, 'main/apcandidates.html', context) 
 
 @user_passes_test(lambda u: u.is_superuser)
 def updateapcandidate(request, pk):
@@ -220,17 +220,17 @@ def deleteapcandidate(request, pk):
         apcandidate.delete()
         return HttpResponseRedirect(reverse('apcandidates'))
 
-    return render(request, 'main/aptdeletecandidate.html', context)
+    return render(request, 'main/apdeletecandidate.html', context)
 
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def apttally(request):
+def aptally(request):
     context = {
         'title': 'Resumen Total',
-        'ceit': AP_Candidate.objects.all(),
+        'ap': AP_Candidate.objects.all(),
     }
-    return render(request, 'main/apttally.html', context)
+    return render(request, 'main/aptally.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -248,7 +248,7 @@ def apresult(request):
 @ap_voter_or_superuser
 @department_not_voted_or_superuser
 @ap_schedule_or_superuser
-def ceitballot(request):
+def apballot(request):
     context = {
         'title': 'Boleta',
         'delegado': AP_Candidate.objects.filter(position='Delegado Estudiantil'),
@@ -400,24 +400,24 @@ def settings(request):
             print('Cannot Reset Main Branch')
 
         
-        ### CEIT ####
+        ### ap ####
 
         try:
-            reset_ceit = request.POST['reset_ceit']
+            reset_ap = request.POST['reset_ap']
             candidates = AP_Candidate.objects.all()
             for candidate in candidates:
                 candidate.voters.clear()
-            sweetify.toast(request, 'CEIT Election successfully reset!')
+            sweetify.toast(request, '¡Se restablecio correctamente las elecciones de Analista Programador!')
         except:
-            print('Cannot Reset CEIT Department')
+            print('No se puede restablecer la carrera de Analista Programador')
         try:
-            delete_ceit = request.POST['delete_ceit']
+            delete_ap = request.POST['delete_ap']
             candidates = AP_Candidate.objects.all()
             for candidate in candidates:
                 candidate.delete()
-            sweetify.toast(request, 'CEIT Candidates successfully deleted!')
+            sweetify.toast(request, '¡Los delegados estudiantiles de Analista Programador fueron eliminados!') 
         except:
-            print('Cannot Reset CEIT Department')
+            print('No se pueden restablecer los delegados de Analista Programador')
 
     context = {
         'title': 'Settings'

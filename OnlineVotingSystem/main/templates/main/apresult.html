@@ -24,16 +24,16 @@
                         <div class="row">
                             <div class="col-6 text-center mt-3">
                                 <ul class="h5 text-left" style="list-style: none;">
-                                    {% for governor in governor %}
-                                    <li> {{governor.fullname}} </li>
+                                    {% for delegado in delegado %}
+                                    <li> {{delegado.fullname}} </li>
                                     {% endfor %}
                                 </ul>
                             </div>
 
                             <div class="col-6 text-center mt-3">
                                 <ul class="h5" style="list-style: none;">
-                                    {% for governor in governor %}
-                                    <li> {{governor.voters.all|length }} </li>
+                                    {% for delegado in delegado %}
+                                    <li> {{delegado.voters.all|length }} </li>
                                     {% endfor %}
                                 </ul>
                             </div>

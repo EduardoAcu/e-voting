@@ -25,15 +25,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for ceit in ceit %}
+                        {% for ap in ap %}
                         <tr>
-                            <td>{{ceit.position}}</td>
-                            <td class="d-flex justify-content-center"><img src="{{ ceit.photo_url }}" width="100xp" height="100px"></td> 
-                            <td>{{ceit.fullname}}</td>
-                            <td>{{ceit.bio}}</td>
+                            <td>{{ap.position}}</td>
+                            <td class="d-flex justify-content-center"><img src="{{ ap.photo_url }}" width="100xp" height="100px"></td> 
+                            <td>{{ap.fullname}}</td>
+                            <td>{{ap.bio}}</td>
                             <td class="text-center">  
-                                <a href="{% url 'updateceitcandidate' ceit.id %}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a href="{% url 'deleteceitcandidate' ceit.id %}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                <a href="{% url 'updateapcandidate' ap.id %}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="{% url 'deleteapcandidate' ap.id %}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>   
                         {% endfor %}

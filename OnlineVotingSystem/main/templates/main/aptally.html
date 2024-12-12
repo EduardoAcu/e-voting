@@ -24,13 +24,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for ceit in ceit %}
+                        {% for ap in ap %}
                         <tr>
-                            <td>{{ceit.position}}</td>
-                            <td class="d-flex justify-content-center"><img src="{{ ceit.photo_url }}" width="100xp" height="100px"></td>
-                            <td>{{ceit.fullname}}</td>
-                            <td>{{ceit.bio}}</td>
-                            <td>{{ ceit.voters.all|length }} </td> 
+                            <td>{{ap.position}}</td>
+                            <td class="d-flex justify-content-center"><img src="{{ ap.photo_url }}" width="100xp" height="100px"></td>
+                            <td>{{ap.fullname}}</td>
+                            <td>{{ap.bio}}</td>
+                            <td>{{ ap.voters.all|length }} </td> 
                         </tr>   
                         {% endfor %}
                     </tbody>

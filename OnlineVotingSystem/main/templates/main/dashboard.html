@@ -105,12 +105,12 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
 
-                                        <a href="{% url 'ceitcandidates' %}"> 
+                                        <a href="{% url 'apcandidates' %}"> 
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Candidatos de Analista Programador
                                         </div>
                                         </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ ceitcandidates }} </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ apcandidates }} </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-helmet-safety fa-2x text-gray-300"></i>
@@ -141,11 +141,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for ceit in ceit %}
+                                            {% for ap in ap %}
                                             <tr>
-                                                <td>{{ceit.position}}</td>
-                                                <td>{{ceit.fullname}}</td>
-                                                <td>{{ ceit.voters.all|length }} </td> 
+                                                <td>{{ap.position}}</td>
+                                                <td>{{ap.fullname}}</td>
+                                                <td>{{ ap.voters.all|length }} </td> 
                                             </tr>   
                                             {% endfor %}
                                         </tbody>

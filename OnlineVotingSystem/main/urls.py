@@ -24,11 +24,11 @@ urlpatterns = [
     path('mainssg/candidate/update/<str:pk>', views.updatemainssgcandidate, name='updatemainssgcandidate'),
     path('mainssg/candidate/delete/<str:pk>', views.deletemainssgcandidate, name='deletemainssgcandidate'),
     
-    path('ceit/ballot', views.ceitballot, name='ceitballot'),
-    path('ceit/candidates', views.ceitcandidates, name='ceitcandidates'),
-    path('ceit/tally', views.ceittally, name='ceittally'),
-    path('ceit/result', views.ceitresult, name='ceitresult'),
-    path('ceit/candidate/update/<str:pk>', views.updateceitcandidate, name='updateceitcandidate'),
-    path('ceit/candidate/delete/<str:pk>', views.deleteceitcandidate, name='deleteceitcandidate'),
+    path('ap/ballot', views.apballot, name='apballot'),
+    path('ap/candidates', views.apcandidates, name='apcandidates'),
+    path('ap/tally', views.aptally, name='aptally'),
+    path('ap/result', views.apresult, name='apresult'),
+    path('ap/candidate/update/<str:pk>', views.updateapcandidate, name='updateapcandidate'),
+    path('ap/candidate/delete/<str:pk>', views.deleteapcandidate, name='deleteapcandidate'),
  
 ]
