@@ -12,8 +12,7 @@ def modalID_generator():
 
 class votingschedule(models.Model):
     department = models.TextField(choices=(
-        ('IEI','IEI'),
-        ('AP','AP')
+        ('AP','AP'),
         ), null=True)
     start = models.DateField()
     end = models.DateField()
@@ -21,26 +20,6 @@ class votingschedule(models.Model):
     def __str__(self):
         return f"{self.department}"
 
-class IEI_Candidate(models.Model):
-    modal_id = models.CharField(max_length=50, editable=False, default=modalID_generator)
-    fullname = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to="candidates", blank=True)
-    bio = models.TextField(null=True)
-    position = models.TextField(choices=(
-        ('delegado','Delegado Estudiantil'),
-
-        ), null=True)
-    voters = models.ManyToManyField(Account, blank=True)
-
-        
-    def photo_url(self):
-        if self.photo and hasattr(self.photo, 'url'):
-            return self.photo.url
-        else:
-            return "/static/sb_admin/img/user.png"
-    
-    def __str__(self):
-        return f"{self.fullname}"
 
 class AP_Candidate(models.Model):
     modal_id = models.CharField(max_length=50, editable=False, default=modalID_generator)

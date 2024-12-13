@@ -31,13 +31,12 @@ class Account(AbstractUser):
     username = None  
     email = models.EmailField(unique=True)
     department = models.TextField(choices=(
-         ('IEI','IEI'),
          ('AP','AP'),
         ), null=True)
     otp = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)
     voted_department = models.BooleanField(default=False)
-    voted_main = models.BooleanField(default=False)
+    voted_iei = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = "email"

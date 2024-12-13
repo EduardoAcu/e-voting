@@ -52,18 +52,6 @@ def department_not_voted_or_superuser(function):
      return wrap
 
 
-def iei_not_voted_or_superuser(function):
-     @wraps(function)
-     def wrap(request, *args, **kwargs):
-          profile = request.user
-          if not profile.voted_main or profile.is_superuser:
-               return function(request, *args, **kwargs)
-          else:
-               sweetify.error(request, '¡Ya has votado!')
-               return HttpResponseRedirect(reverse('receipt'))
-     return wrap
-
-
 def ap_voter_or_superuser(function):
   @wraps(function)
   def wrap(request, *args, **kwargs):
@@ -75,30 +63,11 @@ def ap_voter_or_superuser(function):
 
   return wrap
 
-
 def ap_schedule_or_superuser(function):
      @wraps(function)
      def wrap(request, *args, **kwargs):
           try:
                schedule = votingschedule.objects.get(department='AP')
-               start = schedule.start
-               end = schedule.end
-               today = datetime.datetime.now().date()
-               if today >= start and today <= end or request.user.is_superuser:
-                    return function(request, *args, **kwargs)
-               else:
-                    sweetify.error(request, '¡Por favor espere el horario!')
-                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-          except:
-               sweetify.error(request, '¡Aún no hay ningún horario publicado!')
-               return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-     return wrap
-
-def iei_schedule_or_superuser(function):
-     @wraps(function)
-     def wrap(request, *args, **kwargs):
-          try:
-               schedule = votingschedule.objects.get(department='IEI')
                start = schedule.start
                end = schedule.end
                today = datetime.datetime.now().date()

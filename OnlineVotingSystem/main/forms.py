@@ -2,20 +2,6 @@ from django import forms
 from pkg_resources import require
 from .models import *
 
-class IEI_CandidatesForm(forms.ModelForm):
-   class Meta:
-      model = IEI_Candidate
-      exclude = ('voters',)
-      fields = ('fullname', 'photo', 'bio', 'position')
-      position_choices = (
-        ('delegado','Delegado Estudiantil'),
-      )
-      widgets = {
-         'photo': forms.FileInput(attrs={'type': 'file'}),
-         'fullname':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'Nombre Completo' }),
-         'bio':forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Cuéntanos sobre ti y tu lema.' }),
-         'position':forms.Select(choices=position_choices,attrs={'class': 'form-control', 'placeholder':'Cargo' }),
-      }
 
 class AP_CandidatesForm(forms.ModelForm):
    class Meta:

@@ -12,7 +12,7 @@ from datetime import date
 
 
 def landingpage(request):
-    departments = ['IEI','AP']
+    departments = ['AP']
     schedules = votingschedule.objects.all()
     
     # Generar el contexto dinámicamente
@@ -76,7 +76,6 @@ def login_view(request):
                 login(request, user)
                 user = request.user
                 user.verified = True
-                Receipt.objects.create(owner=user, department="Main Branch")
                 Receipt.objects.create(owner=user, department=user.department)
                 user.save()
                 sweetify.success(request, 'Inicio sesión exitosamente')

@@ -61,7 +61,6 @@ def updatevoter(request, pk):
     return render(request, 'main/voterupdate.html', context)
 
 
-
 @user_passes_test(lambda u: u.is_superuser)
 def deletevoter(request, pk):
     voter = Account.objects.get(id=pk)
@@ -152,24 +151,20 @@ def deleteelectionschedule(request, pk):
 
 @user_passes_test(lambda u: u.is_superuser)
 def dashboard(request):
-    ieicandidates =  IEI_Candidate.objects.all().count()
     apcandidates = AP_Candidate.objects.all().count()
-    totalcandidates = ieicandidates + apcandidates
+    totalcandidates =  apcandidates
     voted_department = Account.objects.filter(voted_department=True).count()
-    voted_main = Account.objects.filter(voted_main=True).count()
+    voted_iei = Account.objects.filter(voted_iei=True).count()
     context = {
         'title': 'Dashboard',
 
         'totalcandidates': totalcandidates,
 
-        'iei': IEI_Candidate.objects.all(),
-        'ieicandidates': ieicandidates,
-
         'ap': AP_Candidate.objects.all(),
         'apcandidates': apcandidates,
     
         'registered': Account.objects.filter(is_superuser=False).count(),
-        'voted': voted_department + voted_main,
+        'voted': voted_department + voted_iei,
     }
     return render(request, 'main/dashboard.html', context)
 
@@ -267,140 +262,22 @@ def apballot(request):
         g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
         g_voters = g_voted.voters
         g_voters.add(voter)
-        receipt = Receipt.objects.get(owner=voter, department='AP')
+        receipt = Receipt.objects.get(owner=voter, department=voter.department)
         receipt.delegado = voted_delegado
         receipt.save()
 
     except:
-        print("Ningún Delegado Estudinatil seleccionado")
+        print("Ningún Delegado Estudiantil seleccionado")
     
     return render(request, 'main/apballot.html', context)
     
 ###############################################################################################################################################################
 
-@user_passes_test(lambda u: u.is_superuser)
-def ieicandidates(request):
-    candidate_form = IEI_CandidatesForm()
-    if request.method == 'POST':
-        candidate_form = IEI_CandidatesForm(request.POST, request.FILES)
-        if candidate_form.is_valid():
-            candidate_form.save()
-            return HttpResponseRedirect(reverse("ieicandidates"))
-
-    context = {
-        'title': 'Main SSG Candidates',
-        'form': candidate_form,
-        'iei': IEI_Candidate.objects.all()
-    }
-    return render(request, 'main/ieicandidates.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def updateieicandidate(request, pk):
-    candidate = IEI_Candidate.objects.get(id=pk)
-    candidate_form = IEI_CandidatesForm(instance=candidate)
-    context = {
-                'title': 'Update Main SSG Candidate',
-                'candidate_form': candidate_form
-    }
-    if request.method == 'POST':
-        candidate_form = IEI_CandidatesForm(request.POST, request.FILES, instance=candidate)
-        if candidate_form.is_valid():
-            candidate_form.save()
-            return HttpResponseRedirect(reverse('ieicandidates'))
-    return render(request, 'main/ieiupdatecandidate.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def deleteieicandidate(request, pk):
-    ieicandidate = IEI_Candidate.objects.get(id=pk)
-    context = {
-        'title': 'Delete Main SSG Candidate',
-      'ieicandidate': ieicandidate,
-    }
-    if request.method == 'POST':
-        ieicandidate.delete()
-        return HttpResponseRedirect(reverse('ieicandidates'))
-
-    return render(request, 'main/ieideletecandidate.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def ieitally(request):
-    context = {
-        'title': 'Main SSG Tally',
-        'iei': IEI_Candidate.objects.all(),
-    }
-    return render(request, 'main/ieitally.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def ieiresult(request):
-    context = {
-        'title': 'Main SSG Result',
-        'delegado': IEI_Candidate.objects.filter(position='Delegado Estudiantil'),
-    }
-    return render(request, 'main/ieiresult.html', context)
-
-
-
-@login_required(login_url='login')
-@verified_or_superuser
-@iei_schedule_or_superuser
-@iei_not_voted_or_superuser
-def ieiballot(request):
-    context = {
-        'title': 'Main SSG Ballot',
-        'delegado': IEI_Candidate.objects.filter(position='delegado'),
-    }
-    if request.method == 'POST':
-        voter = request.user
-        voter.voted_main = True
-        voter.save()
-        sweetify.success(request, 'Vote Submitted!')
-        
-        
-
-     ###### DELEGADO ######
-    try: 
-        request.POST['governor']
-        voted_governor = request.POST["governor"]
-        g_voted = IEI_Candidate.objects.get(fullname=voted_governor)
-        g_voters = g_voted.voters
-        g_voters.add(voter)
-        receipt = Receipt.objects.get(owner=voter, department='IEI')
-        receipt.governor = voted_governor
-        receipt.save()
-
-    except:
-        print("No selected Governor")
-
-    return render(request, 'main/ieiballot.html', context)
-
 
 @user_passes_test(lambda u: u.is_superuser)
 def settings(request):
-    if request.method == 'POST':
-        ### MAIN ####
-        try:
-            reset_main = request.POST['reset_main']
-            candidates = IEI_Candidate.objects.all()
-            for candidate in candidates:
-                candidate.voters.clear()
-            sweetify.toast(request, 'Main SSG Election successfully reset!')
-        except:
-            print('Cannot Reset Main Branch')
-        try:
-            delete_main = request.POST['delete_main']
-            candidates = IEI_Candidate.objects.all()
-            for candidate in candidates:
-                candidate.delete()
-            sweetify.toast(request, 'Main SSG Candidates successfully deleted!')
-        except:
-            print('Cannot Reset Main Branch')
-
-        
-        ### ap ####
+    if request.method == 'POST': 
+        ### AP ####
 
         try:
             reset_ap = request.POST['reset_ap']

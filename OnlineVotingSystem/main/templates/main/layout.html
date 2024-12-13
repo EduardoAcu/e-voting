@@ -65,19 +65,11 @@
         <div class="sidebar-heading">
             Carreras
         </div>
-
-        {% if request.user.department == 'IEI' or request.user.is_superuser %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'iei' %}">
-                <i class="fa-solid fa-people-line"></i>
-                <span>Ingenieria Informatica</span></a>
-        </li>
-        {% endif %}
-        
+   
         <!-- Nav Item - Pages Collapse Menu -->
         {% if request.user.department == 'AP' or request.user.is_superuser %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'apballot' %}">
+            <a class="nav-link" href="{% url 'ap' %}">
                 <i class="fa-solid fa-helmet-safety"></i>
                 <span>Analista Programador</span></a>
         </li>
@@ -124,21 +116,6 @@
                 <i class="fa-regular fa-calendar-days"></i>
                 <span>Calendario electoral</span></a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                <i class="fa-solid fa-people-line"></i>
-                <span>Ingenieria Informatica</span>
-            </a>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'ieicandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'ieitally' %}">Resumen</a>
-                    <a class="collapse-item" href="{% url 'ieiresult' %}">Resultados</a>
-                </div>
-            </div>
-        </li>
-
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
