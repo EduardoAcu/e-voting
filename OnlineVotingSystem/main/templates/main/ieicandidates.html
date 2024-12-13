@@ -25,15 +25,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for mainssg in mainssg %}
+                        {% for iei in iei %}
                         <tr>
-                            <td>{{mainssg.position}}</td>
-                            <td class="d-flex justify-content-center"><img src="{{ mainssg.photo_url }}" width="100xp" height="100px"></td>
-                            <td>{{mainssg.fullname}}</td>
-                            <td>{{mainssg.bio}}</td>
+                            <td>{{iei.position}}</td>
+                            <td class="d-flex justify-content-center"><img src="{{ iei.photo_url }}" width="100xp" height="100px"></td>
+                            <td>{{iei.fullname}}</td>
+                            <td>{{iei.bio}}</td>
                             <td class="text-center">  
-                                <a href="{% url 'updatemainssgcandidate' mainssg.id %}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a href="{% url 'deletemainssgcandidate' mainssg.id %}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                <a href="{% url 'updateieicandidate' iei.id %}" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="{% url 'deleteieicandidate' iei.id %}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                             </td>
                         </tr>   
                         {% endfor %}

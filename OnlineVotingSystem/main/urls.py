@@ -17,12 +17,12 @@ urlpatterns = [
     path('election/schedule/update/<str:pk>', views.updateelectionschedule, name='updateelectionschedule'),
     path('election/schedule/delete/<str:pk>', views.deleteelectionschedule, name='deleteelectionschedule'),
     
-    path('mainssg', views.mainssgballot, name='mainssg'),
-    path('mainssg/candidates', views.mainssgcandidates, name='mainssgcandidates'),
-    path('mainssg/tally', views.mainssgtally, name='mainssgtally'),
-    path('mainssg/result', views.mainssgresult, name='mainssgresult'),
-    path('mainssg/candidate/update/<str:pk>', views.updatemainssgcandidate, name='updatemainssgcandidate'),
-    path('mainssg/candidate/delete/<str:pk>', views.deletemainssgcandidate, name='deletemainssgcandidate'),
+    path('iei', views.ieiballot, name='iei'),
+    path('iei/candidates', views.ieicandidates, name='ieicandidates'),
+    path('iei/tally', views.ieitally, name='ieitally'),
+    path('iei/result', views.ieiresult, name='ieiresult'),
+    path('iei/candidate/update/<str:pk>', views.updateieicandidate, name='updateieicandidate'),
+    path('iei/candidate/delete/<str:pk>', views.deleteieicandidate, name='deleteieicandidate'),
     
     path('ap/ballot', views.apballot, name='apballot'),
     path('ap/candidates', views.apcandidates, name='apcandidates'),

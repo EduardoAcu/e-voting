@@ -83,12 +83,12 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                        
-                                        <a href="{% url 'mainssgcandidates' %}"> 
+                                        <a href="{% url 'ieicandidates' %}"> 
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Candidatos de Informatica
                                         </div>
                                         </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ mainssgcandidates }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ieicandidates }}</div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-people-line fa-2x text-gray-300"></i>
@@ -171,11 +171,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for mainssg in mainssg %}
+                                            {% for iei in iei %}
                                             <tr>
-                                                <td>{{mainssg.position}}</td>
-                                                <td>{{mainssg.fullname}}</td>
-                                                <td>{{ mainssg.voters.all|length }} </td> 
+                                                <td>{{iei.position}}</td>
+                                                <td>{{iei.fullname}}</td>
+                                                <td>{{ iei.voters.all|length }} </td> 
                                             </tr>   
                                             {% endfor %}
                                         </tbody>

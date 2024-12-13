@@ -8,7 +8,7 @@ class IEI_CandidatesForm(forms.ModelForm):
       exclude = ('voters',)
       fields = ('fullname', 'photo', 'bio', 'position')
       position_choices = (
-        ('Delegado Estudiantil','Delegado Estudiantil'),
+        ('delegado','Delegado Estudiantil'),
       )
       widgets = {
          'photo': forms.FileInput(attrs={'type': 'file'}),
@@ -23,7 +23,7 @@ class AP_CandidatesForm(forms.ModelForm):
       exclude = ('voters',)
       fields = ('fullname', 'photo', 'bio', 'position')
       position_choices = (
-        ('Delegado Estudiantil','Delegado Estudiantil'),
+        ('delegado','Delegado Estudiantil'),
       )
       widgets = {
          'photo': forms.FileInput(attrs={'type': 'file'}),

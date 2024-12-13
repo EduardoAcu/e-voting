@@ -118,8 +118,6 @@ class UpdateProfileForm(FormSettings):
    }
 
 
-
-
 class VerificationForm(forms.ModelForm):
    class Meta:
       model = Account

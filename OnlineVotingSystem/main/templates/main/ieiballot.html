@@ -1,7 +1,7 @@
 {% extends 'main/layout.html' %}
 
 {% block body %}
-<p style="font-size: 150%; font-weight: bolder;" class="text-center"> Eleciones Informatica </p>
+<p style="font-size: 150%; font-weight: bolder;" class="text-center"> Elecciones de Ingenieria Informatica </p>
 <form action="" method="POST">
     {% csrf_token %}
         <div class="row" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out">
@@ -12,15 +12,15 @@
                             <h5 class="card-title text-center"><b>Delegado Estudiantil</b></h5>
                             <hr>
                             <ul style="list-style: none; margin-left: -40px;">
-                                {% for governor in governor %}
+                                {% for delegado in delegado %}
                                 <li class="d-flex">
                                     <h5>
-                                        <input style="height:15px; width:15px;" type="radio" name="governor" value="{{governor}}"> 
-                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#{{governor.modal_id}}">
+                                        <input style="height:15px; width:15px;" type="radio" name="governor" value="{{delegado}}"> 
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#{{delegado.modal_id}}">
                                                 <i class="fa-solid fa-magnifying-glass-plus"></i> Biografia</a> 
 
-                                            <img src="{{ governor.photo_url }}" width="100px" height="100px" class="ml-2 mr-2">
-                                            <b class="ml-3"> {{governor.fullname}} </b>
+                                            <img src="{{ delegado.photo_url }}" width="100px" height="100px" class="ml-2 mr-2">
+                                            <b class="ml-3"> {{delegado.fullname}} </b>
                                     </h5> 
                                 </li>
                                 {% endfor %}
@@ -37,19 +37,19 @@
     {% endif %}
 </form>
     
-    {% for governor in governor %}
+    {% for delegado in delegado %}
     <!-- Modal -->
-    <div class="modal fade" id="{{governor.modal_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="{{delegado.modal_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ governor.fullname }}'s</b> Biografia</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>{{ delegado.fullname }}'s</b> Biografia</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">{{governor.bio}}</div>
+                <div class="modal-body">{{delegado.bio}}</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
                 </div>

@@ -237,7 +237,7 @@ def aptally(request):
 def apresult(request):
     context = {
         'title': 'Resultado de Analista Programador',
-        'delegado': AP_Candidate.objects.filter(position='Delegado Estudiantil'),
+        'delegado': AP_Candidate.objects.filter(position='delegado'),
     }
     return render(request, 'main/apresult.html', context)
 
@@ -250,8 +250,8 @@ def apresult(request):
 @ap_schedule_or_superuser
 def apballot(request):
     context = {
-        'title': 'Boleta',
-        'delegado': AP_Candidate.objects.filter(position='Delegado Estudiantil'),
+        'title': 'receipts',
+        'delegado': AP_Candidate.objects.filter(position='delegado'),
     }
     if request.method == 'POST':
         voter = request.user
@@ -260,15 +260,15 @@ def apballot(request):
         sweetify.success(request, '¡Votación enviada!')
 
 
-    ###### GOVERNOR ######
+    ###### DELEGADO ######
     try: 
         request.POST['delegado']
-        voted_governor = request.POST["delegado"]
-        g_voted = AP_Candidate.objects.get(fullname=voted_governor)
+        voted_delegado = request.POST["delegado"]
+        g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
         g_voters = g_voted.voters
         g_voters.add(voter)
         receipt = Receipt.objects.get(owner=voter, department='AP')
-        receipt.governor = voted_governor
+        receipt.delegado = voted_delegado
         receipt.save()
 
     except:
@@ -279,24 +279,24 @@ def apballot(request):
 ###############################################################################################################################################################
 
 @user_passes_test(lambda u: u.is_superuser)
-def mainssgcandidates(request):
+def ieicandidates(request):
     candidate_form = IEI_CandidatesForm()
     if request.method == 'POST':
         candidate_form = IEI_CandidatesForm(request.POST, request.FILES)
         if candidate_form.is_valid():
             candidate_form.save()
-            return HttpResponseRedirect(reverse("mainssgcandidates"))
+            return HttpResponseRedirect(reverse("ieicandidates"))
 
     context = {
         'title': 'Main SSG Candidates',
         'form': candidate_form,
-        'mainssg': IEI_Candidate.objects.all()
+        'iei': IEI_Candidate.objects.all()
     }
-    return render(request, 'main/mainssgcandidates.html', context)
+    return render(request, 'main/ieicandidates.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def updatemainssgcandidate(request, pk):
+def updateieicandidate(request, pk):
     candidate = IEI_Candidate.objects.get(id=pk)
     candidate_form = IEI_CandidatesForm(instance=candidate)
     context = {
@@ -307,40 +307,40 @@ def updatemainssgcandidate(request, pk):
         candidate_form = IEI_CandidatesForm(request.POST, request.FILES, instance=candidate)
         if candidate_form.is_valid():
             candidate_form.save()
-            return HttpResponseRedirect(reverse('mainssgcandidates'))
-    return render(request, 'main/mainssgupdatecandidate.html', context)
+            return HttpResponseRedirect(reverse('ieicandidates'))
+    return render(request, 'main/ieiupdatecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def deletemainssgcandidate(request, pk):
-    mainssgcandidate = IEI_Candidate.objects.get(id=pk)
+def deleteieicandidate(request, pk):
+    ieicandidate = IEI_Candidate.objects.get(id=pk)
     context = {
         'title': 'Delete Main SSG Candidate',
-      'mainssgcandidate': mainssgcandidate,
+      'ieicandidate': ieicandidate,
     }
     if request.method == 'POST':
-        mainssgcandidate.delete()
-        return HttpResponseRedirect(reverse('mainssgcandidates'))
+        ieicandidate.delete()
+        return HttpResponseRedirect(reverse('ieicandidates'))
 
-    return render(request, 'main/mainssgdeletecandidate.html', context)
+    return render(request, 'main/ieideletecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def mainssgtally(request):
+def ieitally(request):
     context = {
         'title': 'Main SSG Tally',
-        'mainssg': IEI_Candidate.objects.all(),
+        'iei': IEI_Candidate.objects.all(),
     }
-    return render(request, 'main/mainssgtally.html', context)
+    return render(request, 'main/ieitally.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def mainssgresult(request):
+def ieiresult(request):
     context = {
         'title': 'Main SSG Result',
-        'governor': IEI_Candidate.objects.filter(position='Governor'),
+        'delegado': IEI_Candidate.objects.filter(position='Delegado Estudiantil'),
     }
-    return render(request, 'main/mainssgresult.html', context)
+    return render(request, 'main/ieiresult.html', context)
 
 
 
@@ -348,10 +348,10 @@ def mainssgresult(request):
 @verified_or_superuser
 @iei_schedule_or_superuser
 @iei_not_voted_or_superuser
-def mainssgballot(request):
+def ieiballot(request):
     context = {
         'title': 'Main SSG Ballot',
-        'governor': IEI_Candidate.objects.filter(position='Governor'),
+        'delegado': IEI_Candidate.objects.filter(position='delegado'),
     }
     if request.method == 'POST':
         voter = request.user
@@ -361,7 +361,7 @@ def mainssgballot(request):
         
         
 
-     ###### GOVERNOR ######
+     ###### DELEGADO ######
     try: 
         request.POST['governor']
         voted_governor = request.POST["governor"]
@@ -375,7 +375,7 @@ def mainssgballot(request):
     except:
         print("No selected Governor")
 
-    return render(request, 'main/mainssgballot.html', context)
+    return render(request, 'main/ieiballot.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)

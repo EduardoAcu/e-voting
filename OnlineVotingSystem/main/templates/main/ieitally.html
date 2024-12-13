@@ -24,13 +24,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for mainssg in mainssg %}
+                        {% for iei in iei %}
                         <tr>
-                            <td>{{mainssg.position}}</td>
-                            <td class="d-flex justify-content-center"><img src="{{ mainssg.photo_url }}" width="100xp" height="100px"></td>
-                            <td>{{mainssg.fullname}}</td>
-                            <td>{{mainssg.bio}}</td>
-                            <td>{{ mainssg.voters.all|length }} </td> 
+                            <td>{{iei.position}}</td>
+                            <td class="d-flex justify-content-center"><img src="{{ iei.photo_url }}" width="100xp" height="100px"></td>
+                            <td>{{iei.fullname}}</td>
+                            <td>{{iei.bio}}</td>
+                            <td>{{ iei.voters.all|length }} </td> 
                         </tr>   
                         {% endfor %}
                     </tbody>

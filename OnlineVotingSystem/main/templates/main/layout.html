@@ -68,7 +68,7 @@
 
         {% if request.user.department == 'IEI' or request.user.is_superuser %}
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'mainssg' %}">
+            <a class="nav-link" href="{% url 'iei' %}">
                 <i class="fa-solid fa-people-line"></i>
                 <span>Ingenieria Informatica</span></a>
         </li>
@@ -132,9 +132,9 @@
             </a>
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                 <div class="bg-light py-2 collapse-inner rounded" style="color:white;">
-                    <a class="collapse-item" href="{% url 'mainssgcandidates' %}">Candidatos</a>
-                    <a class="collapse-item" href="{% url 'mainssgtally' %}">Resumen</a>
-                    <a class="collapse-item" href="{% url 'mainssgresult' %}">Resultados</a>
+                    <a class="collapse-item" href="{% url 'ieicandidates' %}">Candidatos</a>
+                    <a class="collapse-item" href="{% url 'ieitally' %}">Resumen</a>
+                    <a class="collapse-item" href="{% url 'ieiresult' %}">Resultados</a>
                 </div>
             </div>
         </li>

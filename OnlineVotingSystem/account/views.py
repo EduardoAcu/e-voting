@@ -36,9 +36,6 @@ def generate_otp():
     otp = ''.join(str(r.randint(0, 9)) for _ in range(length))
     return otp
 
-print(generate_otp())  # Ejemplo de salida: '83425' o '1928376'
-
-
 def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -79,7 +76,7 @@ def login_view(request):
                 login(request, user)
                 user = request.user
                 user.verified = True
-                Receipt.objects.create(owner=user, department="Carrera")
+                Receipt.objects.create(owner=user, department="Main Branch")
                 Receipt.objects.create(owner=user, department=user.department)
                 user.save()
                 sweetify.success(request, 'Inicio sesión exitosamente')
@@ -104,7 +101,6 @@ def verify(request):
             user = request.user
             user.verified = True
             Receipt.objects.create(owner=user, department=user.department)
-            Receipt.objects.create(owner=user, department='Carrera')
             user.save()
             sweetify.success(request, 'Inicio sesión exitosamente')
             return HttpResponseRedirect(reverse('home'))
