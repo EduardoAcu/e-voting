@@ -363,17 +363,17 @@ def ieiballot(request):
 
      ###### DELEGADO ######
     try: 
-        request.POST['governor']
-        voted_governor = request.POST["governor"]
-        g_voted = IEI_Candidate.objects.get(fullname=voted_governor)
+        request.POST['delegado']
+        voted_delegado = request.POST["delegado"]
+        g_voted = IEI_Candidate.objects.get(fullname=voted_delegado)
         g_voters = g_voted.voters
         g_voters.add(voter)
         receipt = Receipt.objects.get(owner=voter, department='IEI')
-        receipt.governor = voted_governor
+        receipt.delegado = voted_delegado
         receipt.save()
 
     except:
-        print("No selected Governor")
+        print("No se selecciono un delegado")
 
     return render(request, 'main/ieiballot.html', context)
 
