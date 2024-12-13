@@ -67,7 +67,7 @@ class Receipt(models.Model):
     owner = models.ForeignKey(Account, on_delete=models.CASCADE)
     department = models.CharField(max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
-    delegado_estudiantil = models.CharField(max_length=50, blank=True, null=True)
+    delegado= models.CharField(max_length=50, blank=True, null=True)
 
     def get_owner(self):
         return self.owner.email

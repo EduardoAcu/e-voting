@@ -56,7 +56,7 @@ def iei_not_voted_or_superuser(function):
      @wraps(function)
      def wrap(request, *args, **kwargs):
           profile = request.user
-          if not profile.voted_main or profile.is_superuser:
+          if not profile.voted_iei or profile.is_superuser:
                return function(request, *args, **kwargs)
           else:
                sweetify.error(request, '¡Ya has votado!')

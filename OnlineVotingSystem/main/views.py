@@ -156,7 +156,7 @@ def dashboard(request):
     apcandidates = AP_Candidate.objects.all().count()
     totalcandidates = ieicandidates + apcandidates
     voted_department = Account.objects.filter(voted_department=True).count()
-    voted_main = Account.objects.filter(voted_main=True).count()
+    voted_iei = Account.objects.filter(voted_iei=True).count()
     context = {
         'title': 'Dashboard',
 
@@ -169,7 +169,7 @@ def dashboard(request):
         'apcandidates': apcandidates,
     
         'registered': Account.objects.filter(is_superuser=False).count(),
-        'voted': voted_department + voted_main,
+        'voted': voted_department + voted_iei,
     }
     return render(request, 'main/dashboard.html', context)
 
@@ -260,15 +260,15 @@ def apballot(request):
         sweetify.success(request, '¡Votación enviada!')
 
 
-    ###### GOVERNOR ######
+    ###### delegado ######
     try: 
         request.POST['delegado']
-        voted_governor = request.POST["delegado"]
-        g_voted = AP_Candidate.objects.get(fullname=voted_governor)
+        voted_delegado = request.POST["delegado"]
+        g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
         g_voters = g_voted.voters
         g_voters.add(voter)
         receipt = Receipt.objects.get(owner=voter, department='AP')
-        receipt.governor = voted_governor
+        receipt.delegado = voted_delegado
         receipt.save()
 
     except:
@@ -279,68 +279,68 @@ def apballot(request):
 ###############################################################################################################################################################
 
 @user_passes_test(lambda u: u.is_superuser)
-def mainssgcandidates(request):
+def ieicandidates(request):
     candidate_form = IEI_CandidatesForm()
     if request.method == 'POST':
         candidate_form = IEI_CandidatesForm(request.POST, request.FILES)
         if candidate_form.is_valid():
             candidate_form.save()
-            return HttpResponseRedirect(reverse("mainssgcandidates"))
+            return HttpResponseRedirect(reverse("ieicandidates"))
 
     context = {
         'title': 'Main SSG Candidates',
         'form': candidate_form,
-        'mainssg': IEI_Candidate.objects.all()
+        'iei': IEI_Candidate.objects.all()
     }
-    return render(request, 'main/mainssgcandidates.html', context)
+    return render(request, 'main/ieicandidates.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def updatemainssgcandidate(request, pk):
+def updateieicandidate(request, pk):
     candidate = IEI_Candidate.objects.get(id=pk)
     candidate_form = IEI_CandidatesForm(instance=candidate)
     context = {
-                'title': 'Update Main SSG Candidate',
+                'title': 'Actualizar Candidato de ingeniería informática',
                 'candidate_form': candidate_form
     }
     if request.method == 'POST':
         candidate_form = IEI_CandidatesForm(request.POST, request.FILES, instance=candidate)
         if candidate_form.is_valid():
             candidate_form.save()
-            return HttpResponseRedirect(reverse('mainssgcandidates'))
-    return render(request, 'main/mainssgupdatecandidate.html', context)
+            return HttpResponseRedirect(reverse('ieicandidates'))
+    return render(request, 'main/ieiupdatecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def deletemainssgcandidate(request, pk):
-    mainssgcandidate = IEI_Candidate.objects.get(id=pk)
+def deleteieicandidate(request, pk):
+    ieicandidate = IEI_Candidate.objects.get(id=pk)
     context = {
         'title': 'Delete Main SSG Candidate',
-      'mainssgcandidate': mainssgcandidate,
+      'ieicandidate': ieicandidate,
     }
     if request.method == 'POST':
-        mainssgcandidate.delete()
-        return HttpResponseRedirect(reverse('mainssgcandidates'))
+        ieicandidate.delete()
+        return HttpResponseRedirect(reverse('ieicandidates'))
 
-    return render(request, 'main/mainssgdeletecandidate.html', context)
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def mainssgtally(request):
-    context = {
-        'title': 'Main SSG Tally',
-        'mainssg': IEI_Candidate.objects.all(),
-    }
-    return render(request, 'main/mainssgtally.html', context)
+    return render(request, 'main/ieideletecandidate.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def mainssgresult(request):
+def ieitally(request):
     context = {
-        'title': 'Main SSG Result',
-        'governor': IEI_Candidate.objects.filter(position='Governor'),
+        'title': 'Resumen total',
+        'iei': IEI_Candidate.objects.all(),
     }
-    return render(request, 'main/mainssgresult.html', context)
+    return render(request, 'main/ieitally.html', context)
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def ieiresult(request):
+    context = {
+        'title': 'resultados de ingenieria informatica',
+        'delegado': IEI_Candidate.objects.filter(position='delegado'),
+    }
+    return render(request, 'main/ieiresult.html', context)
 
 
 
@@ -348,56 +348,56 @@ def mainssgresult(request):
 @verified_or_superuser
 @iei_schedule_or_superuser
 @iei_not_voted_or_superuser
-def mainssgballot(request):
+def ieiballot(request):
     context = {
         'title': 'Main SSG Ballot',
-        'governor': IEI_Candidate.objects.filter(position='Governor'),
+        'delegado': IEI_Candidate.objects.filter(position='delegado'),
     }
     if request.method == 'POST':
         voter = request.user
-        voter.voted_main = True
+        voter.voted_iei = True
         voter.save()
         sweetify.success(request, 'Vote Submitted!')
         
         
 
-     ###### GOVERNOR ######
+     ###### delegado ######
     try: 
-        request.POST['governor']
-        voted_governor = request.POST["governor"]
-        g_voted = IEI_Candidate.objects.get(fullname=voted_governor)
+        request.POST['delegado']
+        voted_delegado = request.POST["delegado"]
+        g_voted = IEI_Candidate.objects.get(fullname=voted_delegado)
         g_voters = g_voted.voters
         g_voters.add(voter)
         receipt = Receipt.objects.get(owner=voter, department='IEI')
-        receipt.governor = voted_governor
+        receipt.delegado = voted_delegado
         receipt.save()
 
     except:
-        print("No selected Governor")
+        print("No has seleccionado un Delegado Estudiantil")
 
-    return render(request, 'main/mainssgballot.html', context)
+    return render(request, 'main/ieiballot.html', context)
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def settings(request):
     if request.method == 'POST':
-        ### MAIN ####
+        ### iei ####
         try:
-            reset_main = request.POST['reset_main']
+            reset_iei = request.POST['reset_iei']
             candidates = IEI_Candidate.objects.all()
             for candidate in candidates:
                 candidate.voters.clear()
-            sweetify.toast(request, 'Main SSG Election successfully reset!')
+            sweetify.toast(request, '¡Se restablecio correctamente las elecciones de Ingenieria Informatica!')
         except:
-            print('Cannot Reset Main Branch')
+            print('No se puede restablecer la carrera de Ingenieria Informatica')
         try:
-            delete_main = request.POST['delete_main']
+            delete_iei = request.POST['delete_iei']
             candidates = IEI_Candidate.objects.all()
             for candidate in candidates:
                 candidate.delete()
-            sweetify.toast(request, 'Main SSG Candidates successfully deleted!')
+            sweetify.toast(request, '¡Los delegados estudiantiles de Ingenieria Informatica fueron eliminados!')
         except:
-            print('Cannot Reset Main Branch')
+            print('No se puede restablecer la carrera de Ingenieria Informatica')
 
         
         ### ap ####

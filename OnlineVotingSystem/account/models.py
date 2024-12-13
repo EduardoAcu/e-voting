@@ -37,7 +37,7 @@ class Account(AbstractUser):
     otp = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)
     voted_department = models.BooleanField(default=False)
-    voted_main = models.BooleanField(default=False)
+    voted_iei = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     USERNAME_FIELD = "email"
