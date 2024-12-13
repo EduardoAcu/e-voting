@@ -31,10 +31,8 @@ class Account(AbstractUser):
     username = None  
     email = models.EmailField(unique=True)
     department = models.TextField(choices=(
-         ('Ingenieria Informatica','Ingenieria Informatica'),
-         ('Analista Programador','Analista Programador'),
-         ('Ingenieria en Ciberseguridad','Ingenieria en Ciberseguridad'),
-         ('Tecnico en Telecomunicaciones','Tecnico en Telecomunicaciones'),
+         ('IEI','IEI'),
+         ('AP','AP'),
         ), null=True)
     otp = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)

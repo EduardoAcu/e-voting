@@ -9,7 +9,7 @@
     <div class="row">
 
         {% for receipt in receipts %}
-            {% if receipt.governor or receipt.vice_governor or receipt.secretary or receipt.treasurer or receipt.auditor or receipt.pio or receipt.businessmanager or receipt.peaceofficer %}
+            {% if receipt.delegado %}
                 <div class="col-xl-12 col-md-12 d-flex justify-content-center" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out"> 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -33,14 +33,7 @@
                                         <tr>
                                             <td>
                                                 <ul style="list-style: none; margin-left: -40px;">
-                                                    <li> Governor - {{receipt.governor}}</li>
-                                                    <li> Vice Governor - {{receipt.vice_governor}} </li>
-                                                    <li> Secretary - {{receipt.secretary}}</li>
-                                                    <li> Treasurer - {{receipt.treasurer}} </li>
-                                                    <li> Auditor - {{receipt.auditor}} </li>
-                                                    <li> P.I.O. - {{receipt.pio}} </li>
-                                                    <li> Business Manager - {{receipt.businessmanager}}  </li>
-                                                    <li> Peace Officer - {{receipt.peaceofficer}}</li>
+                                                    <li> Delegado Estudiantil - {{receipt.delegado}}</li>
                                                 </ul>
                                             </td>
                                         </tr>   

@@ -69,13 +69,13 @@
                                         <div class="text-center d-flex justify-content-center">
                                             <form method="POST" action="">
                                                 {% csrf_token %}
-                                                <input type="text" name="reset_ceit" value="reset_ceit" hidden>
+                                                <input type="text" name="reset_ap" value="reset_ap" hidden>
                                                 <button type="submit" class="ml-2 mt-3 btn btn-primary"> Reiniciar </button>
                                             </form>
                                             
                                             <form method="POST" action="">
                                                 {% csrf_token %}
-                                                <input type="text" name="delete_ceit" value="delete_ceit" hidden>
+                                                <input type="text" name="delete_ap" value="delete_ap" hidden>
                                                 <button type="submit" class="ml-2 mt-3 btn btn-primary"> Eliminar </button>
                                             </form>
                                         </div>

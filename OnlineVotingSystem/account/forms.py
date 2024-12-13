@@ -55,10 +55,8 @@ class RegistrationForm(FormSettings):
       model = Account
       fields = ['last_name', 'first_name', 'email', 'department', 'password',]
       department_choices = (
-         ('Ingenieria Informatica','Ingenieria Informatica'),
-         ('Analista Programador','Analista Programador'),
-         ('Ingenieria en Ciberseguridad','Ingenieria en Ciberseguridad'),
-         ('Tecnico en Telecomunicaciones','Tecnico en Telecomunicaciones'),
+         ('IEI','IEI'),
+         ('AP','AP'),
       )
       widgets = {
       'last_name':forms.TextInput(attrs={'type': 'text', 'class': 'form-control', 'placeholder':'Apellidos' }),

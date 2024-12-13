@@ -105,12 +105,12 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
 
-                                        <a href="{% url 'ceitcandidates' %}"> 
+                                        <a href="{% url 'apcandidates' %}"> 
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Candidatos de Analista Programador
                                         </div>
                                         </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ ceitcandidates }} </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ apcandidates }} </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-helmet-safety fa-2x text-gray-300"></i>
@@ -119,73 +119,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-xl-3 col-md-6 mb-6 mb-2">
-                        <div class="card border-left-secondary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-
-                                        <a href="{% url 'ctecandidates' %}"> 
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Candidatos de Ciberseguridad
-                                        </div>
-                                        </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ctecandidates }} </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-chalkboard-user fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-xl-3 col-md-6 mb-6 mb-2">
-                        <div class="card border-left-danger shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-
-                                        <a href="{% url 'cascandidates' %}">  
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Candidatos de Telecomunicaciones
-                                        </div>
-                                        </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ cascandidates }} </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-atom fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 mb-6 mb-2">
-                        <div class="card border-left-dark shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-
-                                        <a href="{% url 'cotcandidates' %}"> 
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Candidatos de Diseño Digital y Web
-                                        </div>
-                                        </a>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ cotcandidates }} </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <i class="fa-solid fa-screwdriver-wrench fa-2x text-gray-300"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
                 <h1 class="h3 mb-2 text-primary font-weight-bolder text-center mt-5">Recuento de Votos</h1><br>
@@ -195,7 +128,7 @@
                     <div class="col-lg-6" data-aos-anchor-placement="top-center">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">CEIT Deparment Tally</h6>
+                                <h6 class="m-0 font-weight-bold text-primary text-center">Recuento Total de Analista Programador</h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -208,11 +141,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for ceit in ceit %}
+                                            {% for ap in ap %}
                                             <tr>
-                                                <td>{{ceit.position}}</td>
-                                                <td>{{ceit.fullname}}</td>
-                                                <td>{{ ceit.voters.all|length }} </td> 
+                                                <td>{{ap.position}}</td>
+                                                <td>{{ap.fullname}}</td>
+                                                <td>{{ ap.voters.all|length }} </td> 
                                             </tr>   
                                             {% endfor %}
                                         </tbody>
@@ -222,106 +155,10 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-lg-6" data-aos-anchor-placement="top-center">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">CTE Deparment Tally</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered tally-table" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Cargo</th>
-                                                <th>Nombre Completo</th>
-                                                <th>Votos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for cte in cte %}
-                                            <tr>
-                                                <td>{{cte.position}}</td>
-                                                <td>{{cte.fullname}}</td>
-                                                <td>{{ cte.voters.all|length }} </td> 
-                                            </tr>   
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6" data-aos-anchor-placement="top-center">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">CAS Deparment Tally</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered tally-table" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Cargo</th>
-                                                <th>Nombre Completo</th>
-                                                <th>Votos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for cas in cas %}
-                                            <tr>
-                                                <td>{{cas.position}}</td>
-                                                <td>{{cas.fullname}}</td>
-                                                <td>{{ cas.voters.all|length }} </td> 
-                                            </tr>   
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6" data-aos-anchor-placement="top-center">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">COT Deparment Tally</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered tally-table" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>Cargo</th>
-                                                <th>Nombre Completo</th>
-                                                <th>Votos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for cot in cot %}
-                                            <tr>
-                                                <td>{{cot.position}}</td>
-                                                <td>{{cot.fullname}}</td>
-                                                <td>{{ cot.voters.all|length }} </td> 
-                                            </tr>   
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-lg-6" data-aos-anchor-placement="top-center">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary text-center">Main SSG Deparment Tally</h6>
+                                <h6 class="m-0 font-weight-bold text-primary text-center">Recuento Total de Ingenieria Informatica  </h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
