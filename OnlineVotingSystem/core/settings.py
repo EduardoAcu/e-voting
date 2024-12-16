@@ -12,7 +12,7 @@ DEBUG = True
 
 # CSRF_TRUSTED_ORIGINS = ['']
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '34.0.50.132']
+ALLOWED_HOSTS = ['34.0.50.132', 'localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'account.Account'
 
