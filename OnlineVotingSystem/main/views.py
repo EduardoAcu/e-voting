@@ -9,6 +9,11 @@ import sweetify
 from account.forms import *
 from main.decorators import *
 import datetime
+from django.conf import settings
+from web3 import Web3
+from solcx import compile_source
+import hashlib
+import qrcode
 
 
 def landingpage(request):
@@ -237,37 +242,81 @@ def apresult(request):
     return render(request, 'main/apresult.html', context)
 
 
+# Configurar Web3 con Ganache
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # URL de Ganache
+assert web3.is_connected()
+
+# ABI y dirección del contrato desplegado (utiliza la dirección de tu contrato desplegado)
+contract_address = "0xc36637eA49Cd0AaaaFd5b82F90AC541527E4f0cD"  # Reemplaza con la dirección de tu contrato
+contract_abi = [{'anonymous': False, 'inputs': [{'indexed': True, 'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'indexed': False, 'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'indexed': False, 'internalType': 'string', 'name': 'voteHash', 'type': 'string'}, {'indexed': False, 'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'name': 'VoteCast', 'type': 'event'}, {'inputs': [{'internalType': 'string', 'name': '_candidate', 'type': 'string'}, {'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'castVote', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'getVote', 'outputs': [{'internalType': 'address', 'name': '', 'type': 'address'}, {'internalType': 'string', 'name': '', 'type': 'string'}, {'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'address', 'name': '', 'type': 'address'}], 'name': 'hasVoted', 'outputs': [{'internalType': 'bool', 'name': '', 'type': 'bool'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '', 'type': 'string'}], 'name': 'votes', 'outputs': [{'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}]  # ABI del contrato
+
+contract = web3.eth.contract(address=contract_address, abi=contract_abi)
+
 
 @login_required(login_url='login')
 @verified_or_superuser
 @ap_voter_or_superuser
 @department_not_voted_or_superuser
-@ap_schedule_or_superuser
 def apballot(request):
     context = {
         'title': 'receipts',
         'delegado': AP_Candidate.objects.filter(position='delegado'),
     }
+    
     if request.method == 'POST':
         voter = request.user
-        voter.voted_department = True
-        voter.save()
-        sweetify.success(request, '¡Votación enviada!')
+        
+        # Validar si el usuario seleccionó un delegado
+        try:
+            # Obtener el delegado seleccionado
+            voted_delegado = request.POST["delegado"]
+            g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
+            g_voters = g_voted.voters
+            g_voters.add(voter)
 
+            # Crear el hash del voto
+            vote_hash = hashlib.sha256(f"{voter.email}-{voted_delegado}".encode()).hexdigest()
 
-    ###### DELEGADO ######
-    try: 
-        request.POST['delegado']
-        voted_delegado = request.POST["delegado"]
-        g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
-        g_voters = g_voted.voters
-        g_voters.add(voter)
-        receipt = Receipt.objects.get(owner=voter, department=voter.department)
-        receipt.delegado = voted_delegado
-        receipt.save()
+            # Construir la transacción para interactuar con el contrato
+            tx = contract.functions.castVote(voted_delegado, vote_hash).buildTransaction({
+                'from': web3.eth.default_account,
+                'gas': 3000000,
+                'gasPrice': web3.toWei('50', 'gwei'),
+                'nonce': web3.eth.getTransactionCount(web3.eth.default_account),
+            })
 
-    except:
-        print("Ningún Delegado Estudiantil seleccionado")
+            # Firmar la transacción
+            signed_tx = web3.eth.account.signTransaction(tx, private_key="0xfd94cdf551d58c04b5e8e83ac550904a9a421fe669e247b79fecd8f291bbdf2c")  # Reemplaza con la clave privada
+            tx_hash = web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+
+            # Esperar el recibo de la transacción
+            tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
+
+            # Generar el QR para la transacción
+            tx_url = f"https://etherscan.io/tx/{tx_hash.hex()}"
+            qr = qrcode.make(tx_url)
+            qr_path = f"media/qrcodes/{vote_hash}.png"
+            qr.save(qr_path)
+
+            # Guardar en el modelo Receipt
+            receipt, created = Receipt.objects.get_or_create(owner=voter, department=voter.department)
+            receipt.delegado = voted_delegado
+            receipt.delegado_hash = vote_hash
+            receipt.blockchain_tx = tx_hash.hex()
+            receipt.qr_path = qr_path
+            receipt.save()
+
+            # Marcar al votante como que ya votó
+            voter.voted_department = True
+            voter.save()
+
+            sweetify.success(request, '¡Votación enviada con éxito!')
+
+            # Redirigir después de votar
+            return HttpResponseRedirect(reverse('home'))
+
+        except KeyError:
+            sweetify.error(request, 'Ningún Delegado Estudiantil seleccionado')
     
     return render(request, 'main/apballot.html', context)
     
@@ -300,3 +349,4 @@ def settings(request):
         'title': 'Settings'
     }
     return render(request, 'main/settings.html', context)
+

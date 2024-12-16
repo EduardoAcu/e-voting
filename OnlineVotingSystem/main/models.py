@@ -47,6 +47,9 @@ class Receipt(models.Model):
     department = models.CharField(max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     delegado = models.CharField(max_length=50, blank=True, null=True)
+    delegado_hash = models.CharField(max_length=64, blank=True, null=True)  # Hash del voto
+    blockchain_tx = models.CharField(max_length=66, blank=True, null=True)  # Hash de la transacción en la blockchain
+    qr_path = models.CharField(max_length=255, blank=True, null=True)  # Ruta del archivo QR generado
 
     def get_owner(self):
         return self.owner.email

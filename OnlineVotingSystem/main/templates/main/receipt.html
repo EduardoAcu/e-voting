@@ -33,10 +33,24 @@
                                         <tr>
                                             <td>
                                                 <ul style="list-style: none; margin-left: -40px;">
-                                                    <li> Delegado Estudiantil - {{receipt.delegado}}</li>
+                                                    <li> Delegado Estudiantil - {{ receipt.delegado }}</li>
                                                 </ul>
                                             </td>
-                                        </tr>   
+                                        </tr>
+                                        <!-- Mostrar el hash de la transacción en la blockchain -->
+                                        <tr>
+                                            <td>
+                                                <strong>Transacción en Blockchain:</strong> 
+                                                <a href="https://etherscan.io/tx/{{ receipt.blockchain_tx }}" target="_blank">{{ receipt.blockchain_tx }}</a>
+                                            </td>
+                                        </tr>
+                                        <!-- Mostrar el QR generado -->
+                                        <tr>
+                                            <td>
+                                                <strong>Verificación del voto:</strong><br>
+                                                <img src="{{ receipt.qr_path }}" alt="QR de la transacción" class="img-fluid" style="width: 150px;">
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
