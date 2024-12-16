@@ -10,7 +10,7 @@ install_solc("0.8.0")
 set_solc_version("0.8.0")
 
 # Conectarse a Ganache
-web3 = Web3(Web3.HTTPProvider("http://34.176.72.24:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
 assert web3.is_connected()
 
 # Obtener la primera cuenta disponible de Ganache
@@ -21,8 +21,9 @@ print("Cuentas disponibles en Ganache:", accounts)
 web3.eth.default_account = accounts[0]
 print("Usando la cuenta:", web3.eth.default_account)
 
-# Clave privada de la cuenta (deberías obtenerla manualmente desde Ganache UI o el archivo de configuración)
-private_key = "0xef0299deef725d059176834aefe58bbced518e61377efcf6555721d475b36b4a"  # Clave privada obtenida de Ganache UI o archivo de configuración
+# Obtener la clave privada de la primera cuenta de Ganache (esto solo es para redes de prueba como Ganache)
+private_key = web3.eth.account.privateKeyToAccount(web3.eth.get_private_key(accounts[0])).privateKey
+print(f"Clave privada de la cuenta seleccionada: {private_key.hex()}")
 
 # Código fuente del contrato (Voting.sol)
 contract_source_code = """
