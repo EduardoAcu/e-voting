@@ -1,18 +1,28 @@
 from web3 import Web3
 from solcx import compile_source
-import json
+from solcx import install_solc
+from solcx import set_solc_version
 
+# Instalar Solidity versión 0.8.0
+install_solc("0.8.0")
+
+# Configura la versión instalada (por ejemplo, 0.8.0)
+set_solc_version("0.8.0")
 
 # Conectarse a Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
 assert web3.is_connected()
 
+# Obtener la primera cuenta disponible de Ganache
+accounts = web3.eth.accounts  # Obtener las cuentas de Ganache
+print("Cuentas disponibles en Ganache:", accounts)
 
-# Dirección de la cuenta (asegúrate de tener fondos en Ganache)
-web3.eth.default_account = "0xdDD8b0079638021C0dBe5B049445b7D270968D99"  # Reemplaza con una cuenta de Ganache
+# Seleccionar la primera cuenta disponible
+web3.eth.default_account = accounts[0]
+print("Usando la cuenta:", web3.eth.default_account)
 
-# Clave privada de la cuenta de Ganache
-private_key = "0xfd94cdf551d58c04b5e8e83ac550904a9a421fe669e247b79fecd8f291bbdf2c"  # Reemplaza con tu clave privada de Ganache
+# Clave privada de la cuenta (deberías obtenerla manualmente desde Ganache UI o el archivo de configuración)
+private_key = "0xef0299deef725d059176834aefe58bbced518e61377efcf6555721d475b36b4a"  # Clave privada obtenida de Ganache UI o archivo de configuración
 
 # Código fuente del contrato (Voting.sol)
 contract_source_code = """
@@ -87,3 +97,4 @@ tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
 # Dirección del contrato desplegado
 contract_address = tx_receipt.contractAddress
 print(f"Contrato desplegado en: {contract_address}")
+

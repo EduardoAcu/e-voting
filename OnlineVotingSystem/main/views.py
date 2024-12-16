@@ -10,10 +10,12 @@ from account.forms import *
 from main.decorators import *
 import datetime
 from django.conf import settings
-from web3 import Web3
 from solcx import compile_source
 import hashlib
 import qrcode
+from main.conect_blockchain import *
+from .desencription import decrypt_private_key
+
 
 
 def landingpage(request):
@@ -159,7 +161,6 @@ def dashboard(request):
     apcandidates = AP_Candidate.objects.all().count()
     totalcandidates =  apcandidates
     voted_department = Account.objects.filter(voted_department=True).count()
-    voted_iei = Account.objects.filter(voted_iei=True).count()
     context = {
         'title': 'Dashboard',
 
@@ -169,7 +170,7 @@ def dashboard(request):
         'apcandidates': apcandidates,
     
         'registered': Account.objects.filter(is_superuser=False).count(),
-        'voted': voted_department + voted_iei,
+        'voted': voted_department
     }
     return render(request, 'main/dashboard.html', context)
 
@@ -242,19 +243,6 @@ def apresult(request):
     return render(request, 'main/apresult.html', context)
 
 
-# Configurar Web3 con Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # URL de Ganache
-assert web3.is_connected()
-
-web3.eth.default_account = "0x8647A0622cB17FCC9Fbc15582B6918FCDf16e757"
-
-# ABI y dirección del contrato desplegado (utiliza la dirección de tu contrato desplegado)
-contract_address = "0xc36637eA49Cd0AaaaFd5b82F90AC541527E4f0cD"  # Reemplaza con la dirección de tu contrato
-contract_abi = [{'anonymous': False, 'inputs': [{'indexed': True, 'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'indexed': False, 'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'indexed': False, 'internalType': 'string', 'name': 'voteHash', 'type': 'string'}, {'indexed': False, 'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'name': 'VoteCast', 'type': 'event'}, {'inputs': [{'internalType': 'string', 'name': '_candidate', 'type': 'string'}, {'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'castVote', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'getVote', 'outputs': [{'internalType': 'address', 'name': '', 'type': 'address'}, {'internalType': 'string', 'name': '', 'type': 'string'}, {'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'address', 'name': '', 'type': 'address'}], 'name': 'hasVoted', 'outputs': [{'internalType': 'bool', 'name': '', 'type': 'bool'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '', 'type': 'string'}], 'name': 'votes', 'outputs': [{'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}]  # ABI del contrato
-
-contract = web3.eth.contract(address=contract_address, abi=contract_abi)
-
-
 @login_required(login_url='login')
 @verified_or_superuser
 @ap_voter_or_superuser
@@ -264,19 +252,27 @@ def apballot(request):
         'title': 'receipts',
         'delegado': AP_Candidate.objects.filter(position='delegado'),
     }
-    
+
     if request.method == 'POST':
         voter = request.user
-        
+
+        # Obtener la dirección de la billetera del votante
+        wallet_address = voter.wallet_address  # Dirección pública de la billetera
+
+        # Obtener la clave privada cifrada
+        encrypted_private_key = voter.private_key  # La clave privada cifrada de la base de datos
+
+        # Desencriptar la clave privada
+        private_key = decrypt_private_key(encrypted_private_key)
+
+        # Verificar si el votante ya ha votado
+        has_voted = contract.functions.hasVoted(wallet_address).call()
+        if has_voted:
+            sweetify.error(request, '¡Ya has votado anteriormente!')
+            return render(request, 'main/apballot.html', context)
+
         # Validar si el usuario seleccionó un delegado
         try:
-
-            has_voted = contract.functions.hasVoted(web3.eth.default_account).call()
-            if has_voted:
-                sweetify.error(request, '¡Ya has votado anteriormente!')
-                return render(request, 'main/apballot.html', context)
-            
-            # Obtener el delegado seleccionado
             voted_delegado = request.POST["delegado"]
             g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
             g_voters = g_voted.voters
@@ -285,16 +281,24 @@ def apballot(request):
             # Crear el hash del voto
             vote_hash = hashlib.sha256(f"{voter.email}-{voted_delegado}".encode()).hexdigest()
 
+            balance = web3.eth.get_balance(wallet_address)
+            print(f"Saldo de la cuenta {wallet_address}: {web3.from_wei(balance, 'ether')} ETH")
+
+            # Asegúrate de que haya suficiente saldo para cubrir el gas
+            required_gas = web3.to_wei(0.01, 'ether')  # Estimación del gas que la transacción va a consumir
+            if balance < required_gas:
+                raise Exception("Saldo insuficiente para cubrir el gas de la transacción.")
+
             # Construir la transacción para interactuar con el contrato
             tx = contract.functions.castVote(voted_delegado, vote_hash).build_transaction({
-                'from': web3.eth.default_account,
+                'from': wallet_address,
                 'gas': 3000000,
                 'gasPrice': web3.to_wei('50', 'gwei'),
-                'nonce': web3.eth.get_transaction_count(web3.eth.default_account),
+                'nonce': web3.eth.get_transaction_count(wallet_address),
             })
 
-            # Firmar la transacción
-            signed_tx = web3.eth.account.sign_transaction(tx, private_key="0x6c1781900191fa93560b806b85752c92e9c7175050f37a7c41a01c759f5c6575")  # Reemplaza con la clave privada
+            # Firmar la transacción con la clave privada desencriptada
+            signed_tx = web3.eth.account.sign_transaction(tx, private_key=private_key)
             tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
 
             # Esperar el recibo de la transacción
@@ -325,7 +329,7 @@ def apballot(request):
 
         except KeyError:
             sweetify.error(request, 'Ningún Delegado Estudiantil seleccionado')
-    
+
     return render(request, 'main/apballot.html', context)
     
 ###############################################################################################################################################################

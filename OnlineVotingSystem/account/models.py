@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
-
 class AccountManager(UserManager):
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
@@ -28,21 +27,20 @@ class AccountManager(UserManager):
 
 
 class Account(AbstractUser):
-    username = None  
+    username = None
     email = models.EmailField(unique=True)
-    department = models.TextField(choices=(
-         ('AP','AP'),
-        ), null=True)
+    department = models.TextField(choices=(('AP', 'AP'),), null=True)
     otp = models.IntegerField(null=True)
     verified = models.BooleanField(default=False)
     voted_department = models.BooleanField(default=False)
-    voted_iei = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    wallet_address = models.CharField(max_length=42, unique=True, null=True, blank=True)  # Dirección de la billetera
+    private_key = models.TextField(null=True, blank=True)  # Clave privada (guardar de forma segura)
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = AccountManager()
-
 
     def __str__(self):
         return self.last_name + ", " + self.first_name

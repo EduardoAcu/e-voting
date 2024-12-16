@@ -8,8 +8,11 @@ import sweetify
 import random as r
 import smtplib
 from datetime import date
-
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Account
+from web3 import Web3
+from cryptography.fernet import Fernet
 
 def landingpage(request):
     departments = ['AP']
@@ -137,3 +140,67 @@ def logout_view(request):
     logout(request)
     return render(request, 'account/login.html')
 
+# Asegúrate de que esta clave secreta esté almacenada de manera segura.
+fernet_key = settings.FERNET_KEY  
+cipher_suite = Fernet(fernet_key)
+
+# Configuración de Web3 para conectar a Ganache
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
+assert web3.is_connected()
+
+#Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
+from_account = "0x59BD5dDc97C2457d2B145859FA9Fd77B41AA5580"  # Esta es la cuenta con ETH de prueba
+private_key_from_account = "0xc7f82467398072755a9f2b1040ba20fee0fda465bd135b683c40be9154e8a783"
+
+# Función para transferir ETH de prueba desde una cuenta origen en Ganache a la nueva billetera
+def transfer_eth_to_new_account(to_address):
+    # Verificar saldo de la cuenta origen antes de hacer la transacción
+    balance = web3.eth.get_balance(from_account)
+    print(f"Saldo de la cuenta origen {from_account}: {web3.from_wei(balance, 'ether')} ETH")
+
+    # Asegúrate de que haya suficiente saldo
+    if balance < web3.to_wei(1, 'ether'):
+        raise Exception("No hay suficiente saldo de ETH de prueba en la cuenta origen.")
+
+    # Crear transacción para transferir 1 ETH de prueba
+    transaction = {
+        'to': to_address,
+        'value': web3.to_wei(100, 'ether'),  # Enviar 1 ETH de prueba
+        'gas': 2000000,
+        'gasPrice': web3.to_wei('20', 'gwei'),
+        'nonce': web3.eth.get_transaction_count(from_account),
+        'chainId': 1337  # Ganache usa la ID de cadena 1337
+    }
+
+    # Firmar la transacción
+    signed_tx = web3.eth.account.sign_transaction(transaction, private_key=private_key_from_account)
+
+    # Enviar la transacción
+    tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
+
+    # Esperar el recibo de la transacción
+    tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
+
+    print(f"Transacción completada con hash: {tx_receipt['transactionHash'].hex()}")
+
+
+@receiver(post_save, sender=Account)
+def create_wallet(sender, instance, created, **kwargs):
+    if created:  # Solo se ejecuta cuando el usuario se crea
+        # Crear una billetera de Ethereum para el usuario
+        new_account = web3.eth.account.create()
+
+        # Asignar la dirección pública de la billetera al usuario
+        instance.wallet_address = new_account.address
+
+        # Cifrar la clave privada antes de almacenarla en la base de datos
+        encrypted_private_key = cipher_suite.encrypt(new_account.key).decode('utf-8')  # Cifrado de la clave privada
+
+        # Asignar la clave privada cifrada al usuario
+        instance.private_key = encrypted_private_key
+
+        # Transferir 1 ETH de prueba de la cuenta de Ganache a la nueva billetera
+        transfer_eth_to_new_account(new_account.address)
+
+        # Guardar los cambios en el modelo de usuario
+        instance.save()

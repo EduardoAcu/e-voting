@@ -5,6 +5,7 @@ from web3 import Web3
 # Conexión a la blockchain (puede ser Infura, Alchemy o una red local)
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
+FERNET_KEY= b'7nFaVXOy7JgEXsB5Qwjycnetu8qsNjNUaIToIPnCkV8='
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
