@@ -1,19 +1,12 @@
 from web3 import Web3
 from solcx import compile_source
 import json
-from solcx import install_solc
-from solcx import set_solc_version
-
-# Instalar Solidity versión 0.8.0
-install_solc("0.8.0")
-
-# Configura la versión instalada (por ejemplo, 0.8.0)
-set_solc_version("0.8.0")
 
 
 # Conectarse a Ganache
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 assert web3.is_connected()
+
 
 # Dirección de la cuenta (asegúrate de tener fondos en Ganache)
 web3.eth.default_account = "0xdDD8b0079638021C0dBe5B049445b7D270968D99"  # Reemplaza con una cuenta de Ganache

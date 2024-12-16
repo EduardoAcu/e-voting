@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 contract Voting {
     struct Vote {
@@ -14,7 +14,6 @@ contract Voting {
     event VoteCast(address indexed voter, string candidate, string voteHash, uint256 timestamp);
 
     function castVote(string memory _candidate, string memory _voteHash) public {
-        require(!hasVoted[msg.sender], "You have already voted!");
 
         // Register the vote
         votes[_voteHash] = Vote({

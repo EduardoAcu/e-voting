@@ -246,6 +246,8 @@ def apresult(request):
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # URL de Ganache
 assert web3.is_connected()
 
+web3.eth.default_account = "0x8647A0622cB17FCC9Fbc15582B6918FCDf16e757"
+
 # ABI y dirección del contrato desplegado (utiliza la dirección de tu contrato desplegado)
 contract_address = "0xc36637eA49Cd0AaaaFd5b82F90AC541527E4f0cD"  # Reemplaza con la dirección de tu contrato
 contract_abi = [{'anonymous': False, 'inputs': [{'indexed': True, 'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'indexed': False, 'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'indexed': False, 'internalType': 'string', 'name': 'voteHash', 'type': 'string'}, {'indexed': False, 'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'name': 'VoteCast', 'type': 'event'}, {'inputs': [{'internalType': 'string', 'name': '_candidate', 'type': 'string'}, {'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'castVote', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'getVote', 'outputs': [{'internalType': 'address', 'name': '', 'type': 'address'}, {'internalType': 'string', 'name': '', 'type': 'string'}, {'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'address', 'name': '', 'type': 'address'}], 'name': 'hasVoted', 'outputs': [{'internalType': 'bool', 'name': '', 'type': 'bool'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '', 'type': 'string'}], 'name': 'votes', 'outputs': [{'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}]  # ABI del contrato
@@ -268,6 +270,12 @@ def apballot(request):
         
         # Validar si el usuario seleccionó un delegado
         try:
+
+            has_voted = contract.functions.hasVoted(web3.eth.default_account).call()
+            if has_voted:
+                sweetify.error(request, '¡Ya has votado anteriormente!')
+                return render(request, 'main/apballot.html', context)
+            
             # Obtener el delegado seleccionado
             voted_delegado = request.POST["delegado"]
             g_voted = AP_Candidate.objects.get(fullname=voted_delegado)
@@ -278,19 +286,19 @@ def apballot(request):
             vote_hash = hashlib.sha256(f"{voter.email}-{voted_delegado}".encode()).hexdigest()
 
             # Construir la transacción para interactuar con el contrato
-            tx = contract.functions.castVote(voted_delegado, vote_hash).buildTransaction({
+            tx = contract.functions.castVote(voted_delegado, vote_hash).build_transaction({
                 'from': web3.eth.default_account,
                 'gas': 3000000,
-                'gasPrice': web3.toWei('50', 'gwei'),
-                'nonce': web3.eth.getTransactionCount(web3.eth.default_account),
+                'gasPrice': web3.to_wei('50', 'gwei'),
+                'nonce': web3.eth.get_transaction_count(web3.eth.default_account),
             })
 
             # Firmar la transacción
-            signed_tx = web3.eth.account.signTransaction(tx, private_key="0xfd94cdf551d58c04b5e8e83ac550904a9a421fe669e247b79fecd8f291bbdf2c")  # Reemplaza con la clave privada
-            tx_hash = web3.eth.sendRawTransaction(signed_tx.rawTransaction)
+            signed_tx = web3.eth.account.sign_transaction(tx, private_key="0x6c1781900191fa93560b806b85752c92e9c7175050f37a7c41a01c759f5c6575")  # Reemplaza con la clave privada
+            tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
 
             # Esperar el recibo de la transacción
-            tx_receipt = web3.eth.waitForTransactionReceipt(tx_hash)
+            tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
 
             # Generar el QR para la transacción
             tx_url = f"https://etherscan.io/tx/{tx_hash.hex()}"
