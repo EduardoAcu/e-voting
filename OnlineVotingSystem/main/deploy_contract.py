@@ -10,7 +10,7 @@ install_solc("0.8.0")
 set_solc_version("0.8.0")
 
 # Conectarse a Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
+web3 = Web3(Web3.HTTPProvider("http://34.176.72.24:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
 assert web3.is_connected()
 
 # Obtener la primera cuenta disponible de Ganache

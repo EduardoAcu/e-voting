@@ -145,7 +145,7 @@ fernet_key = settings.FERNET_KEY
 cipher_suite = Fernet(fernet_key)
 
 # Configuración de Web3 para conectar a Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
+web3 = Web3(Web3.HTTPProvider("http://34.176.72.24:7545"))  # Conexión a Ganache
 assert web3.is_connected()
 
 #Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
