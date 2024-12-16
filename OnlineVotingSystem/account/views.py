@@ -166,8 +166,8 @@ def transfer_eth_to_new_account(to_address):
     transaction = {
         'to': to_address,
         'value': web3.to_wei(100, 'ether'),  # Enviar 1 ETH de prueba
-        'gas': 2000000,
-        'gasPrice': web3.to_wei('20', 'gwei'),
+        'gas': 21000,
+        'gasPrice': web3.to_wei('1', 'gwei'),
         'nonce': web3.eth.get_transaction_count(from_account),
         'chainId': 1337  # Ganache usa la ID de cadena 1337
     }

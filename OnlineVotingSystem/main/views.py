@@ -292,8 +292,8 @@ def apballot(request):
             # Construir la transacción para interactuar con el contrato
             tx = contract.functions.castVote(voted_delegado, vote_hash).build_transaction({
                 'from': wallet_address,
-                'gas': 3000000,
-                'gasPrice': web3.to_wei('50', 'gwei'),
+                'gas': 150000,
+                'gasPrice': web3.to_wei('1', 'gwei'),
                 'nonce': web3.eth.get_transaction_count(wallet_address),
             })
 
