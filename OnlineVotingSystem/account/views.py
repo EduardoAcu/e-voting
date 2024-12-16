@@ -148,24 +148,15 @@ cipher_suite = Fernet(fernet_key)
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
 assert web3.is_connected()
 
-# Obtener la primera cuenta disponible de Ganache
-accounts = web3.eth.accounts  # Obtener las cuentas de Ganache
-print("Cuentas disponibles en Ganache:", accounts)
-
-# Seleccionar la primera cuenta disponible
-web3.eth.default_account = accounts[1]
-print("Usando la cuenta:", web3.eth.default_account)
-
-# Obtener la clave privada de la primera cuenta de Ganache (esto solo es para redes de prueba como Ganache)
-private_key = web3.eth.account.privateKeyToAccount(web3.eth.get_private_key(accounts[1])).privateKey
-print(f"Clave privada de la cuenta seleccionada: {private_key.hex()}")
-
+#Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
+from_account = "0x7590DBa733Fe29EBbC88A4B889Ae90F5bC54805a"  # Esta es la cuenta con ETH de prueba
+private_key_from_account = "0x4e73f65e87a2a0d9b6447a00a885ec75fb6c7d02fd9fcd682a4b0a88788fb731"
 
 # Función para transferir ETH de prueba desde una cuenta origen en Ganache a la nueva billetera
 def transfer_eth_to_new_account(to_address):
     # Verificar saldo de la cuenta origen antes de hacer la transacción
-    balance = web3.eth.get_balance(web3.eth.default_account)
-    print(f"Saldo de la cuenta origen {web3.eth.default_account}: {web3.from_wei(balance, 'ether')} ETH")
+    balance = web3.eth.get_balance(from_account)
+    print(f"Saldo de la cuenta origen {from_account}: {web3.from_wei(balance, 'ether')} ETH")
 
     # Asegúrate de que haya suficiente saldo
     if balance < web3.to_wei(1, 'ether'):
@@ -177,12 +168,12 @@ def transfer_eth_to_new_account(to_address):
         'value': web3.to_wei(100, 'ether'),  # Enviar 1 ETH de prueba
         'gas': 21000,
         'gasPrice': web3.to_wei('1', 'gwei'),
-        'nonce': web3.eth.get_transaction_count(web3.eth.default_account),
+        'nonce': web3.eth.get_transaction_count(from_account),
         'chainId': 1337  # Ganache usa la ID de cadena 1337
     }
 
     # Firmar la transacción
-    signed_tx = web3.eth.account.sign_transaction(transaction, private_key=private_key)
+    signed_tx = web3.eth.account.sign_transaction(transaction, private_key=private_key_from_account)
 
     # Enviar la transacción
     tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
