@@ -13,7 +13,7 @@ from django.conf import settings
 from solcx import compile_source
 import hashlib
 import qrcode
-from main.conect_blockchain import *
+from main.deploy_contract import *
 from .desencription import decrypt_private_key
 
 
