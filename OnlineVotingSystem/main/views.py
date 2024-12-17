@@ -17,6 +17,20 @@ from main.deploy_contract import *
 from .desencription import decrypt_private_key
 import json
 from web3 import Web3
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Ruta absoluta al archivo
+contract_file_path = os.path.join(BASE_DIR, "contract_deployed.txt")
+
+# Verificar si el archivo existe
+if not os.path.exists(contract_file_path):
+    raise FileNotFoundError(f"No se encontró el archivo en la ruta {contract_file_path}")
+
+# Cargar la dirección del contrato
+with open(contract_file_path, "r") as f:
+    contract_address = f.read().strip()
 
 # Conexión a Ganache
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))

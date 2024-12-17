@@ -18,7 +18,7 @@ class MainConfig(AppConfig):
         contract_file = 'contract_deployed.txt'
     
         # Verificar si el contrato ya está desplegado
-        if not os.path.exists(contract_file):
+        if not os.path.exists("contract_deployed.txt"):
             print("Contrato no desplegado, procediendo al despliegue...")
 
             # Conectarse a Ganache
