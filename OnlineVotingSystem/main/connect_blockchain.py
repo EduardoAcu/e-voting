@@ -1,7 +1,10 @@
-from core.settings import *
+from web3 import Web3
+
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
+assert web3.is_connected()
 
 # ABI y dirección del contrato desplegado (utiliza la dirección de tu contrato desplegado)
-contract_address = "0xC182B0e2257E0ae6760EdB72D4493198Bab66430"  # Reemplaza con la dirección de tu contrato
+contract_address = "0x31A904f0B330530d8fccF8832b0bc45A8DDf7574"  # Reemplaza con la dirección de tu contrato
 contract_abi = [{'anonymous': False, 'inputs': [{'indexed': True, 'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'indexed': False, 'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'indexed': False, 'internalType': 'string', 'name': 'voteHash', 'type': 'string'}, {'indexed': False, 'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'name': 'VoteCast', 'type': 'event'}, {'inputs': [{'internalType': 'string', 'name': '_candidate', 'type': 'string'}, {'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'castVote', 'outputs': [], 'stateMutability': 'nonpayable', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '_voteHash', 'type': 'string'}], 'name': 'getVote', 'outputs': [{'internalType': 'address', 'name': '', 'type': 'address'}, {'internalType': 'string', 'name': '', 'type': 'string'}, {'internalType': 'uint256', 'name': '', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'address', 'name': '', 'type': 'address'}], 'name': 'hasVoted', 'outputs': [{'internalType': 'bool', 'name': '', 'type': 'bool'}], 'stateMutability': 'view', 'type': 'function'}, {'inputs': [{'internalType': 'string', 'name': '', 'type': 'string'}], 'name': 'votes', 'outputs': [{'internalType': 'address', 'name': 'voter', 'type': 'address'}, {'internalType': 'string', 'name': 'candidate', 'type': 'string'}, {'internalType': 'uint256', 'name': 'timestamp', 'type': 'uint256'}], 'stateMutability': 'view', 'type': 'function'}]  # ABI del contrato
 
 contract = web3.eth.contract(address=contract_address, abi=contract_abi)
