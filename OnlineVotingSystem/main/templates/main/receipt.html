@@ -45,12 +45,15 @@
                                             </td>
                                         </tr>
                                         <!-- Mostrar el QR generado -->
+                                        {% if receipt.qr_path %}
                                         <tr>
                                             <td>
                                                 <strong>Verificación del voto:</strong><br>
                                                 <img src="{{ receipt.qr_path }}" alt="QR de la transacción" class="img-fluid" style="width: 150px;">
                                             </td>
+                                            {% else %}
                                         </tr>
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>

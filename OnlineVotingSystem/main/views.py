@@ -331,6 +331,7 @@ def apballot(request):
 
             # URL pública del QR almacenado en Google Cloud Storage
             qr_url = qr_blob.public_url
+            print(f"URL pública del QR: {qr_url}")
 
             # Guardar en el modelo Receipt
             receipt, created = Receipt.objects.get_or_create(owner=voter, department=voter.department)
