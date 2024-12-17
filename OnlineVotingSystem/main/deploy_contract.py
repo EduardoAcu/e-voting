@@ -9,9 +9,7 @@ install_solc("0.8.0")
 # Configura la versión instalada (por ejemplo, 0.8.0)
 set_solc_version("0.8.0")
 
-from web3 import Web3
-
-# Conectarse a Ganache (asegúrate de que Ganache esté corriendo en el puerto correcto)
+# Conectarse a Ganache
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
 # Verificar si la conexión es exitosa
@@ -23,7 +21,7 @@ else:
 # Ruta del archivo que contiene las claves privadas (ganache-accounts.txt)
 accounts_file = "ganache-accounts.txt"
 
-# Inicializar private_keys como una lista vacía para evitar el error
+# Inicializar private_keys como una lista vacía
 private_keys = []
 
 # Leer las claves privadas desde el archivo
@@ -53,10 +51,10 @@ if accounts:
 else:
     print("No se encontraron cuentas en Ganache.")
 
-# Si hay claves privadas en el archivo, mostrarlas
+# Si hay claves privadas en el archivo, seleccionar la primera clave privada y usarla
 if private_keys:
-    for idx, private_key in enumerate(private_keys, start=1):
-        print(f"Clave privada {idx}: {private_key}")
+    private_key = private_keys[0]  # Usar la primera clave privada
+    print(f"Usando la clave privada: {private_key}")
 else:
     print("No se encontraron claves privadas para mostrar.")
 
@@ -123,7 +121,7 @@ transaction = contract.constructor().build_transaction({
 })
 
 # Firmar la transacción
-signed_tx = web3.eth.account.sign_transaction(transaction, private_keys)
+signed_tx = web3.eth.account.sign_transaction(transaction, private_key)
 
 # Enviar la transacción
 tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
