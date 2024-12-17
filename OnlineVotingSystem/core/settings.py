@@ -128,9 +128,9 @@ storage_client = storage.Client()
 bucket = storage_client.get_bucket(bucket_name)
 blob = bucket.blob(file_name)
 
-blob.download_to_filename('/eduardoignacio577/django-service-account.json')
+blob.download_to_filename('/home/eduardoignacio577/django-service-account.json')
 
-credentials = service_account.Credentials.from_service_account_file('/eduardoignacio577/django-service-account.json')
+credentials = service_account.Credentials.from_service_account_file('/home/eduardoignacio577/django-service-account.json')
 
 # Cliente que usará las credenciales configuradas por la variable de entorno
 client = secretmanager.SecretManagerServiceClient()
