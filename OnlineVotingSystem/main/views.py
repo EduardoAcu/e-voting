@@ -35,6 +35,7 @@ with open(contract_file_path, "r") as f:
 # Conexión a Ganache
 web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 assert web3.is_connected()
+print(web3.is_connected())
 
 # Cargar la dirección del contrato desde el archivo
 with open("contract_deployed.txt", "r") as f:
