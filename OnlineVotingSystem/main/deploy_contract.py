@@ -15,7 +15,8 @@ class MainConfig(AppConfig):
     name = "main"
 
     def ready(self):
-        contract_file = 'contract_deployed.txt'
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        contract_file = os.path.join(BASE_DIR, "contract_deployed.txt")
     
         # Verificar si el contrato ya está desplegado
         if not os.path.exists("contract_deployed.txt"):
@@ -83,7 +84,6 @@ class MainConfig(AppConfig):
             abi = contract_interface["abi"]
             bytecode = contract_interface["bin"]
 
-            print("ABI:", abi)
 
             # Crear el contrato en Web3
             contract = web3.eth.contract(abi=abi, bytecode=bytecode)
@@ -117,10 +117,6 @@ class MainConfig(AppConfig):
 
             with open("contract_abi.json", "w") as abi_file:
                 json.dump(abi, abi_file)
-
-            # Guardar dirección del contrato en un archivo
-            with open(contract_file, 'w') as f:
-                f.write(contract_address)
 
         else:
             # Si el contrato ya ha sido desplegado, leer la dirección desde el archivo
