@@ -318,10 +318,8 @@ def apballot(request):
             # Usar un nombre único para el archivo (por ejemplo, basado en el hash del voto)
             qr_blob = bucket.blob(f"qrcodes/{vote_hash}.png")
             
-            # Subir el archivo QR al bucket de Google Cloud
-            qr_path = '/home/eduardoignacio577/e-voting/e-voting/OnlineVotingSystem/media/qrcodes/qr.png'  # Ruta temporal para guardar el QR antes de subirlo
-            qr.save(qr_path)
-            qr_blob.upload_from_filename(qr_path)
+            # Subir el archivo QR directamente al bucket de Google Cloud
+            qr_blob.upload_from_file(qr)
 
             # URL pública del QR almacenado en Google Cloud Storage
             qr_url = qr_blob.public_url
@@ -347,6 +345,7 @@ def apballot(request):
             sweetify.error(request, 'Ningún Delegado Estudiantil seleccionado')
 
     return render(request, 'main/apballot.html', context)
+
     
 ###############################################################################################################################################################
 
