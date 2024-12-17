@@ -149,8 +149,8 @@ web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
 assert web3.is_connected()
 
 #Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
-from_account = "0x7590DBa733Fe29EBbC88A4B889Ae90F5bC54805a"  # Esta es la cuenta con ETH de prueba
-private_key_from_account = "0x4e73f65e87a2a0d9b6447a00a885ec75fb6c7d02fd9fcd682a4b0a88788fb731"
+from_account = "0x77488a1bFB2e3970E9D6dB82e02FB0Dd0fF06662"  # Esta es la cuenta con ETH de prueba
+private_key_from_account = "0x73b543c02563be062c5f044fed7e3ca2938330225d862a8610c22c9c995833fc"
 
 # Función para transferir ETH de prueba desde una cuenta origen en Ganache a la nueva billetera
 def transfer_eth_to_new_account(to_address):
