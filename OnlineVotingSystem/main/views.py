@@ -15,8 +15,23 @@ import hashlib
 import qrcode
 from main.deploy_contract import *
 from .desencription import decrypt_private_key
+import json
+from web3 import Web3
 
+# Conexión a Ganache
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+assert web3.is_connected()
 
+# Cargar la dirección del contrato desde el archivo
+with open("contract_deployed.txt", "r") as f:
+    contract_address = f.read().strip()
+
+# Cargar el ABI del contrato desde el archivo
+with open("contract_abi.json", "r") as abi_file:
+    abi = json.load(abi_file)
+
+# Crear la instancia del contrato
+contract = web3.eth.contract(address=contract_address, abi=abi)
 
 def landingpage(request):
     return render(request, 'landingpage/landingpage.html')  

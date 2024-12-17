@@ -3,6 +3,7 @@ from web3 import Web3
 from solcx import compile_source
 from solcx import install_solc, set_solc_version
 import os
+import json
 
 # Instalar Solidity versión 0.8.0
 install_solc("0.8.0")
@@ -113,6 +114,13 @@ class MainConfig(AppConfig):
                 f.write(contract_address)
 
             contract = web3.eth.contract(address=contract_address, abi=abi)
+
+            with open("contract_abi.json", "w") as abi_file:
+                json.dump(abi, abi_file)
+
+            # Guardar dirección del contrato en un archivo
+            with open(contract_file, 'w') as f:
+                f.write(contract_address)
 
         else:
             # Si el contrato ya ha sido desplegado, leer la dirección desde el archivo

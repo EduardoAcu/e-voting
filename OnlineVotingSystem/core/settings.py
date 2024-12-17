@@ -116,10 +116,6 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
 # Para almacenar archivos localmente (si es necesario)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-from google.cloud import secretmanager
-from google.oauth2 import service_account
-
 # Cargar automáticamente las credenciales desde la variable de entorno
 client = secretmanager.SecretManagerServiceClient()
 
