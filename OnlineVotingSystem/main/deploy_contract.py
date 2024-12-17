@@ -2,6 +2,15 @@ from web3 import Web3
 from solcx import compile_source
 from solcx import install_solc, set_solc_version
 from core.settings import *
+import sys
+import os
+
+# Agregar el directorio base de tu proyecto a sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'e_voting')))
+
+# Ahora puedes importar core.settings
+from core.settings import *
+
 
 # Instalar Solidity versión 0.8.0
 install_solc("0.8.0")
