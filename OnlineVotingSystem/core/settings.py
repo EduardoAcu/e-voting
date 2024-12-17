@@ -119,14 +119,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 bucket_name = 'media-voting'
 
-json_blob_name = 'gs://media-voting/e-voting-444918-bff424e804d7.json'
+file_name = 'e-voting-444918-bff424e804d7.json'
 
 # Crear el cliente de Google Cloud Storage
 storage_client = storage.Client()
 
 # Descargar el archivo JSON desde el bucket
-bucket = storage_client.bucket(bucket_name)
-blob = bucket.blob(json_blob_name)
+bucket = storage_client.get_bucket(bucket_name)
+blob = bucket.blob(file_name)
 
 blob.download_to_filename('/tmp/django-service-account.json')
 
