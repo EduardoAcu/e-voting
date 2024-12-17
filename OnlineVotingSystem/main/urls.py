@@ -6,7 +6,7 @@ urlpatterns = [
     path('home', views.home, name='home'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('receipt', views.receipt, name='receipt'),
-    path('settings', views.settings, name='settings'),
+    path('configuraciones', views.configuraciones, name='configuraciones'),
     path('profile/<str:pk>', views.profile, name='profile'),
 
     path('voters', views.voters, name='voters'),

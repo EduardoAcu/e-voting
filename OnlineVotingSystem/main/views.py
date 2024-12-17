@@ -309,7 +309,7 @@ def apballot(request):
             qr = qrcode.make(tx_url)
 
             # Accede al nombre del bucket desde la configuración
-            bucket_name = settings.GS_BUCKET_NAME
+            bucket_name = settings.GS_BUCKET_NAME 
 
             # Conectar con Google Cloud Storage
             storage_client = storage.Client()
@@ -351,7 +351,7 @@ def apballot(request):
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def settings(request):
+def configuraciones(request):
     if request.method == 'POST': 
         ### AP ####
 
@@ -373,7 +373,7 @@ def settings(request):
             print('No se pueden restablecer los delegados de Analista Programador')
 
     context = {
-        'title': 'Settings'
+        'title': 'configuraciones'
     }
-    return render(request, 'main/settings.html', context)
+    return render(request, 'main/configuraciones.html', context)
 
