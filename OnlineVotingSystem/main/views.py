@@ -18,7 +18,6 @@ from .desencription import decrypt_private_key
 from google.cloud import storage
 
 
-
 def landingpage(request):
     return render(request, 'landingpage/landingpage.html')  
 
@@ -309,15 +308,18 @@ def apballot(request):
             tx_url = f"https://etherscan.io/tx/{tx_hash.hex()}"
             qr = qrcode.make(tx_url)
 
+            # Accede al nombre del bucket desde la configuración
+            bucket_name = settings.GS_BUCKET_NAME
+
             # Conectar con Google Cloud Storage
             storage_client = storage.Client()
-            bucket = storage_client.get_bucket(settings.GS_BUCKET_NAME)
+            bucket = storage_client.get_bucket(bucket_name)
             
             # Usar un nombre único para el archivo (por ejemplo, basado en el hash del voto)
             qr_blob = bucket.blob(f"qrcodes/{vote_hash}.png")
             
             # Subir el archivo QR al bucket de Google Cloud
-            qr_path = '/tmp/qr.png'  # Ruta temporal para guardar el QR antes de subirlo
+            qr_path = '/home/eduardoignacio577/e-voting/e-voting/OnlineVotingSystem/media/qrcodes/qr.png'  # Ruta temporal para guardar el QR antes de subirlo
             qr.save(qr_path)
             qr_blob.upload_from_filename(qr_path)
 
