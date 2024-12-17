@@ -112,7 +112,8 @@ STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 
-
+# Para almacenar archivos localmente (si es necesario)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Crear cliente de Secret Manager
 client = secretmanager.SecretManagerServiceClient()
