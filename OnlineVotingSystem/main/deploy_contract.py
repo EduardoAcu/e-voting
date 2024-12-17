@@ -16,8 +16,9 @@ class MainConfig(AppConfig):
 
     def ready(self):
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        contract_file = os.path.join(BASE_DIR, "contract_deployed.txt")
-    
+        contract_file_path = '/home/eduardoignacio577/e-voting/e-voting/OnlineVotingSystem/contract_deployed.txt'
+
+
         # Verificar si el contrato ya está desplegado
         if not os.path.exists("contract_deployed.txt"):
             print("Contrato no desplegado, procediendo al despliegue...")
@@ -111,8 +112,10 @@ class MainConfig(AppConfig):
             print(f"Contrato desplegado en: {contract_address}")
 
             # Crear el archivo para indicar que el contrato ya fue desplegado
-            with open(contract_file, 'w') as f:
+            print("Creando el archivo contract_deployed.txt...")
+            with open('contract_deployed.txt', 'w') as f:
                 f.write(contract_address)
+
 
             contract = web3.eth.contract(address=contract_address, abi=abi)
 
@@ -121,7 +124,7 @@ class MainConfig(AppConfig):
 
         else:
             # Si el contrato ya ha sido desplegado, leer la dirección desde el archivo
-            with open(contract_file, 'r') as f:
+            with open(contract_file_path, 'r') as f:
                 contract_address = f.read()
             print(f"El contrato ya está desplegado en: {contract_address}")
 
