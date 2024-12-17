@@ -16,7 +16,7 @@ import qrcode
 from main.connect_blockchain import *
 from .desencription import decrypt_private_key
 from google.cloud import storage
-
+import os
 
 def landingpage(request):
     return render(request, 'landingpage/landingpage.html')  
@@ -307,6 +307,8 @@ def apballot(request):
             # Generar el QR para la transacción
             tx_url = f"https://etherscan.io/tx/{tx_hash.hex()}"
             qr = qrcode.make(tx_url)
+            qr_path = '/home/eduardoignacio577/e-voting/e-voting/OnlineVotingSystem/media/qrcodes/qr.png'
+            qr.save(qr_path)        
 
             # Accede al nombre del bucket desde la configuración
             bucket_name = settings.GS_BUCKET_NAME 
@@ -317,9 +319,15 @@ def apballot(request):
             
             # Usar un nombre único para el archivo (por ejemplo, basado en el hash del voto)
             qr_blob = bucket.blob(f"qrcodes/{vote_hash}.png")
+
+            if os.path.exists(qr_path):
+                qr_blob.upload_from_filename(qr_path)
+            else:
+                print(f"Error: El archivo {qr_path} no existe.")
             
-            # Subir el archivo QR directamente al bucket de Google Cloud
-            qr_blob.upload_from_file(qr)
+            # Subir el archivo QR al bucket de Google Cloud
+            qr.save(qr_path)  # Primero, guardamos el archivo en disco
+            qr_blob.upload_from_filename(qr_path)
 
             # URL pública del QR almacenado en Google Cloud Storage
             qr_url = qr_blob.public_url
