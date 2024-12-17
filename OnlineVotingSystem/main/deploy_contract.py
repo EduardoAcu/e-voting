@@ -1,15 +1,6 @@
 from web3 import Web3
 from solcx import compile_source
 from solcx import install_solc, set_solc_version
-from core.settings import *
-import sys
-import os
-
-# Agregar el directorio base de tu proyecto a sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'e_voting')))
-
-# Ahora puedes importar core.settings
-from core.settings import *
 
 
 # Instalar Solidity versión 0.8.0
@@ -18,17 +9,51 @@ install_solc("0.8.0")
 # Configura la versión instalada (por ejemplo, 0.8.0)
 set_solc_version("0.8.0")
 
+# Conectarse a Ganache (asegúrate de que Ganache esté corriendo en el puerto correcto)
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
-# Obtener la primera cuenta disponible de Ganache
+# Verificar si la conexión es exitosa
+if web3.is_connected():
+    print("Conexión exitosa con Ganache.")
+else:
+    print("No se pudo conectar a Ganache.")
+
+# Ruta del archivo que contiene las claves privadas (ganache-accounts.txt)
+accounts_file = "ganache-accounts.txt"
+
+# Leer las claves privadas desde el archivo
+try:
+    with open(accounts_file, "r") as file:
+        private_keys = file.readlines()
+
+    # Eliminar saltos de línea y espacios adicionales de las claves privadas
+    private_keys = [key.strip() for key in private_keys]
+
+    # Verificar si el archivo tiene claves privadas
+    if not private_keys:
+        print("No se encontraron claves privadas en el archivo.")
+    else:
+        print(f"Se encontraron {len(private_keys)} claves privadas.")
+except FileNotFoundError:
+    print(f"No se encontró el archivo {accounts_file}. Asegúrate de que la ruta sea correcta.")
+
+# Obtener las cuentas disponibles en Ganache
 accounts = web3.eth.accounts  # Obtener las cuentas de Ganache
 print("Cuentas disponibles en Ganache:", accounts)
 
-# Seleccionar la primera cuenta disponible
-web3.eth.default_account = accounts[0]
-print("Usando la cuenta:", web3.eth.default_account)
+# Si hay cuentas disponibles, seleccionar la primera cuenta
+if accounts:
+    web3.eth.default_account = accounts[0]
+    print("Usando la cuenta:", web3.eth.default_account)
+else:
+    print("No se encontraron cuentas en Ganache.")
 
-private_key = web3.eth.account.privateKeyToAccount(accounts[0]).privateKey
-print(f"Private key for account {accounts[0]}: {private_key}")
+# Si hay claves privadas en el archivo, mostrarlas
+if private_keys:
+    for idx, private_key in enumerate(private_keys, start=1):
+        print(f"Clave privada {idx}: {private_key}")
+else:
+    print("No se encontraron claves privadas para mostrar.")
 
 # Código fuente del contrato (Voting.sol)
 contract_source_code = """

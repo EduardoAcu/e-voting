@@ -2,10 +2,6 @@ from pathlib import Path
 import os
 from google.cloud import secretmanager
 from google.oauth2 import service_account
-from web3 import Web3
-
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
-assert web3.is_connected()
 
 
 

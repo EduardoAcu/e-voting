@@ -13,7 +13,6 @@ from django.dispatch import receiver
 from .models import Account
 from web3 import Web3
 from cryptography.fernet import Fernet
-from core.settings import *
 
 def landingpage(request):
     departments = ['AP']
@@ -150,8 +149,8 @@ web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Conexión a Ganache
 assert web3.is_connected()
 
 #Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
-from_account = "0x96b313b1934C20AF74f68974bbf659b94627946B"  # Esta es la cuenta con ETH de prueba
-private_key_from_account = "0xc3aae90f7fb0f85d012fb03105820fe199958bd1a7069e3565f1b02cb09e8ca4"
+from_account = "0x7590DBa733Fe29EBbC88A4B889Ae90F5bC54805a"  # Esta es la cuenta con ETH de prueba
+private_key_from_account = "0x4e73f65e87a2a0d9b6447a00a885ec75fb6c7d02fd9fcd682a4b0a88788fb731"
 
 # Función para transferir ETH de prueba desde una cuenta origen en Ganache a la nueva billetera
 def transfer_eth_to_new_account(to_address):
