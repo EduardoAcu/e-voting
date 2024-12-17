@@ -73,10 +73,10 @@ contract = web3.eth.contract(abi=abi, bytecode=bytecode)
 
 # Construir la transacción de despliegue
 transaction = contract.constructor().build_transaction({
-    'from': web3.eth.default_account,
+    'from': from_account,
     'gas': 3000000,
     'gasPrice': web3.to_wei('50', 'gwei'),
-    'nonce': web3.eth.get_transaction_count(web3.eth.default_account),
+    'nonce': web3.eth.get_transaction_count(from_account),
 })
 
 # Firmar la transacción
