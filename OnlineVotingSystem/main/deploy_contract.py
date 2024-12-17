@@ -21,8 +21,8 @@ print("Cuentas disponibles en Ganache:", accounts)
 web3.eth.default_account = accounts[0]
 print("Usando la cuenta:", web3.eth.default_account)
 
-# Clave privada de la cuenta (deberías obtenerla manualmente desde Ganache UI o el archivo de configuración)
-private_key = "0xc3aae90f7fb0f85d012fb03105820fe199958bd1a7069e3565f1b02cb09e8ca4"  # Clave privada obtenida de Ganache UI o archivo de configuración
+private_key = web3.eth.account.privateKeyToAccount(accounts[0]).privateKey
+print(f"Private key for account {accounts[0]}: {private_key}")
 
 # Código fuente del contrato (Voting.sol)
 contract_source_code = """
