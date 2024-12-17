@@ -121,7 +121,7 @@ client = secretmanager.SecretManagerServiceClient()
 # Asegúrate de usar el formato correcto
 project_id = "1087274725247"  # Tu ID de proyecto de Google Cloud
 secret_name = "django-key"  # Nombre de tu secreto
-version = "2"  # O puedes usar el número de versión específico
+version = "3"  # O puedes usar el número de versión específico
 
 # Construir el nombre del secreto
 secret_version_name = f"projects/{project_id}/secrets/{secret_name}/versions/{version}"
