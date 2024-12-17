@@ -102,16 +102,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-GS_BUCKET_STATIC = 'django-voting'
+GS_BUCKET_NAME = 'django-voting'
 
-GS_BUCKET_MEDIA = 'media-voting'
 
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_STATIC}/'
+STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 
 # Configuración de almacenamiento para archivos de medios (si también lo usas)
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_MEDIA}/'
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 
 # Para almacenar archivos localmente (si es necesario)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
