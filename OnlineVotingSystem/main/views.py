@@ -13,40 +13,10 @@ from django.conf import settings
 from solcx import compile_source
 import hashlib
 import qrcode
-from main.deploy_contract import *
+from main.connect_blockchain import *
 from .desencription import decrypt_private_key
-import json
-from web3 import Web3
-import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Ruta absoluta al archivo
-contract_file_path = os.path.join(BASE_DIR, "contract_deployed.txt")
-
-# Verificar si el archivo existe
-if not os.path.exists(contract_file_path):
-    raise FileNotFoundError(f"No se encontró el archivo en la ruta {contract_file_path}")
-
-# Cargar la dirección del contrato
-with open(contract_file_path, "r") as f:
-    contract_address = f.read().strip()
-
-# Conexión a Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
-assert web3.is_connected()
-print(web3.is_connected())
-
-# Cargar la dirección del contrato desde el archivo
-with open("contract_deployed.txt", "r") as f:
-    contract_address = f.read().strip()
-
-# Cargar el ABI del contrato desde el archivo
-with open("contract_abi.json", "r") as abi_file:
-    abi = json.load(abi_file)
-
-# Crear la instancia del contrato
-contract = web3.eth.contract(address=contract_address, abi=abi)
 
 def landingpage(request):
     return render(request, 'landingpage/landingpage.html')  
