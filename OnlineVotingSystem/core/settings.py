@@ -107,7 +107,6 @@ GS_BUCKET_STATIC = 'django-voting'
 GS_BUCKET_MEDIA = 'media-voting'
 
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-
 STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_STATIC}/'
 
 # Configuración de almacenamiento para archivos de medios (si también lo usas)
