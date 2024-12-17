@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from google.cloud import secretmanager
 from google.oauth2 import service_account
+from google.cloud import storage
 
 
 
@@ -117,8 +118,26 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
 # Para almacenar archivos localmente (si es necesario)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Cargar automáticamente las credenciales desde la variable de entorno
-client = secretmanager.SecretManagerServiceClient()
+
+bucket_name = 'media-voting'
+
+file_name = 'e-voting-444918-bff424e804d7.json'
+
+# Crear el cliente de Google Cloud Storage
+storage_client = storage.Client()
+
+# Descargar el archivo JSON desde el bucket
+bucket = storage_client.get_bucket(bucket_name)
+blob = bucket.blob(file_name)
+
+# Ruta al archivo de la cuenta de servicio con la clave privada
+service_account_file = '/home/eduardoignacio577/django-service-account.json'
+
+# Crear las credenciales usando el archivo de cuenta de servicio
+credentials = service_account.Credentials.from_service_account_file(service_account_file)
+
+# Crear el cliente de Secret Manager con las credenciales
+client = secretmanager.SecretManagerServiceClient(credentials=credentials)
 
 # Configura el nombre del secreto
 project_id = "e-voting-444918"
