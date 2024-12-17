@@ -10,54 +10,13 @@ install_solc("0.8.0")
 set_solc_version("0.8.0")
 
 # Conectarse a Ganache
-web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+web3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))  # Usar la URL de Ganache o el proveedor correspondiente
+assert web3.is_connected()
 
-# Verificar si la conexión es exitosa
-if web3.is_connected():
-    print("Conexión exitosa con Ganache.")
-else:
-    print("No se pudo conectar a Ganache.")
+#Dirección de la cuenta origen en Ganache (cuenta con ETH de prueba)
+from_account = "0x96b313b1934C20AF74f68974bbf659b94627946B"  # Esta es la cuenta con ETH de prueba
 
-# Ruta del archivo que contiene las claves privadas (ganache-accounts.txt)
-accounts_file = "ganache-accounts.txt"
-
-# Inicializar private_keys como una lista vacía
-private_keys = []
-
-# Leer las claves privadas desde el archivo
-try:
-    with open(accounts_file, "r") as file:
-        private_keys = file.readlines()
-
-    # Eliminar saltos de línea y espacios adicionales de las claves privadas
-    private_keys = [key.strip() for key in private_keys]
-
-    # Verificar si el archivo tiene claves privadas
-    if not private_keys:
-        print("No se encontraron claves privadas en el archivo.")
-    else:
-        print(f"Se encontraron {len(private_keys)} claves privadas.")
-except FileNotFoundError:
-    print(f"No se encontró el archivo {accounts_file}. Asegúrate de que la ruta sea correcta.")
-
-# Obtener las cuentas disponibles en Ganache
-accounts = web3.eth.accounts  # Obtener las cuentas de Ganache
-print("Cuentas disponibles en Ganache:", accounts)
-
-# Si hay cuentas disponibles, seleccionar la primera cuenta
-if accounts:
-    web3.eth.default_account = accounts[0]
-    print("Usando la cuenta:", web3.eth.default_account)
-else:
-    print("No se encontraron cuentas en Ganache.")
-
-# Si hay claves privadas en el archivo, seleccionar la primera clave privada y usarla
-if private_keys:
-    private_key = private_keys[0]  # Usar la primera clave privada
-    print(f"Usando la clave privada: {private_key}")
-else:
-    print("No se encontraron claves privadas para mostrar.")
-
+private_key = "0xc3aae90f7fb0f85d012fb03105820fe199958bd1a7069e3565f1b02cb09e8ca4"# Clave privada obtenida de Ganache UI o archivo de configuración
 
 # Código fuente del contrato (Voting.sol)
 contract_source_code = """
