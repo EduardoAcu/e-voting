@@ -311,7 +311,7 @@ def apballot(request):
 
             # Conectar con Google Cloud Storage
             storage_client = storage.Client()
-            bucket = storage_client.get_bucket(settings.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
+            bucket = storage_client.get_bucket(settings.GS_BUCKET_NAME)
             
             # Usar un nombre único para el archivo (por ejemplo, basado en el hash del voto)
             qr_blob = bucket.blob(f"qrcodes/{vote_hash}.png")
