@@ -122,7 +122,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Nombre del bucket y archivo
 bucket_name = 'media-voting'
 file_name = 'e-voting-444918-bff424e804d7.json'
-local_file_path = '/home/eduardoignacio577/credentials/django-service-account.json'
+local_file_path = '/home/eduardoignacio577/django-service-account.json'
 
 # Descargar el archivo desde el bucket
 storage_client = storage.Client()
