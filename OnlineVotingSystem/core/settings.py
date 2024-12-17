@@ -113,13 +113,9 @@ STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GOOGLE_BUCKET_NAME = 'django-voting'
 
 client = secretmanager.SecretManagerServiceClient()
-secret_name = "projects/1087274725247/secrets/django-key/versions/1"
-
+secret_name = "projects/1087274725247/secrets/django-key"
 response = client.access_secret_version(name=secret_name)
 secret_data = response.payload.data.decode("UTF-8")
-
-# Cargar las credenciales de Google Cloud Storage desde el secreto
-credentials = json.loads(secret_data)
 
 OTP = False
 OTP_EMAIL = "youremail@gmail.com"
