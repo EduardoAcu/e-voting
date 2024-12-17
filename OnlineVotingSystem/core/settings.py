@@ -105,7 +105,7 @@ USE_TZ = True
 GS_BUCKET_NAME = 'django-voting'
 
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_DEFAULT_ACL = 'publicRead'
+
 STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 
 # Configuración de almacenamiento para archivos de medios (si también lo usas)
