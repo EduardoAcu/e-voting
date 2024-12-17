@@ -123,7 +123,7 @@ transaction = contract.constructor().build_transaction({
 })
 
 # Firmar la transacción
-signed_tx = web3.eth.account.sign_transaction(transaction, private_key)
+signed_tx = web3.eth.account.sign_transaction(transaction, private_keys)
 
 # Enviar la transacción
 tx_hash = web3.eth.send_raw_transaction(signed_tx.raw_transaction)
