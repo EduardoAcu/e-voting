@@ -100,15 +100,17 @@ USE_I18N = True
 USE_TZ = True
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')   
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'main/static'),  # Usa rutas absolutas
-]
+STATIC_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+GOOGLE_BUCKET_NAME = 'django-voting'
+
+GOOGLE_APPLICATION_CREDENTIALS = '/OnlineVotingSystem/e-voting-444918-3d7d88efc1c7.json'
 
 OTP = False
 OTP_EMAIL = "youremail@gmail.com"
