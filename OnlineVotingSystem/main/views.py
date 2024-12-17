@@ -15,6 +15,7 @@ import hashlib
 import qrcode
 from main.connect_blockchain import *
 from .desencription import decrypt_private_key
+from google.cloud import storage
 
 
 
@@ -307,15 +308,28 @@ def apballot(request):
             # Generar el QR para la transacción
             tx_url = f"https://etherscan.io/tx/{tx_hash.hex()}"
             qr = qrcode.make(tx_url)
-            qr_path = f"media/qrcodes/{vote_hash}.png"
+
+            # Conectar con Google Cloud Storage
+            storage_client = storage.Client()
+            bucket = storage_client.get_bucket(settings.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
+            
+            # Usar un nombre único para el archivo (por ejemplo, basado en el hash del voto)
+            qr_blob = bucket.blob(f"qrcodes/{vote_hash}.png")
+            
+            # Subir el archivo QR al bucket de Google Cloud
+            qr_path = '/tmp/qr.png'  # Ruta temporal para guardar el QR antes de subirlo
             qr.save(qr_path)
+            qr_blob.upload_from_filename(qr_path)
+
+            # URL pública del QR almacenado en Google Cloud Storage
+            qr_url = qr_blob.public_url
 
             # Guardar en el modelo Receipt
             receipt, created = Receipt.objects.get_or_create(owner=voter, department=voter.department)
             receipt.delegado = voted_delegado
             receipt.delegado_hash = vote_hash
             receipt.blockchain_tx = tx_hash.hex()
-            receipt.qr_path = qr_path
+            receipt.qr_path = qr_url  # Usar la URL pública del QR
             receipt.save()
 
             # Marcar al votante como que ya votó
