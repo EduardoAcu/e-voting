@@ -19,6 +19,7 @@ AUTH_USER_MODEL = 'account.Account'
 
 
 INSTALLED_APPS = [
+    'storages',
     'account',
     'main',
     'sweetify',
@@ -101,16 +102,17 @@ USE_I18N = True
 
 USE_TZ = True
 
+GS_BUCKET_NAME = 'django-voting'
 
-MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
-
-
-STATIC_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
-
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_DEFAULT_ACL = 'publicRead'
+STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
 
-GOOGLE_BUCKET_NAME = 'django-voting'
+# Configuración de almacenamiento para archivos de medios (si también lo usas)
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+
+
 
 # Crear cliente de Secret Manager
 client = secretmanager.SecretManagerServiceClient()
