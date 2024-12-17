@@ -2,6 +2,8 @@ from pathlib import Path
 import os
 from google.cloud import secretmanager
 import json
+from google.cloud import storage
+from google.auth import credentials
 
 FERNET_KEY= b'7nFaVXOy7JgEXsB5Qwjycnetu8qsNjNUaIToIPnCkV8='
 
@@ -115,8 +117,8 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
 # Para almacenar archivos localmente (si es necesario)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Crear cliente de Secret Manager
-client = secretmanager.SecretManagerServiceClient()
+# Cliente que usará las credenciales configuradas por la variable de entorno
+client = storage.Client(credentials=credentials.Credentials.from_service_account_file('gs://media-voting/e-voting-444918-bff424e804d7.json'))
 
 # Asegúrate de usar el formato correcto
 project_id = "1087274725247"  # Tu ID de proyecto de Google Cloud
