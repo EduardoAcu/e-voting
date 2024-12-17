@@ -1,5 +1,7 @@
 from pathlib import Path
 import os
+from google.cloud import secretmanager
+import json
 
 FERNET_KEY= b'7nFaVXOy7JgEXsB5Qwjycnetu8qsNjNUaIToIPnCkV8='
 
@@ -99,6 +101,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+client = secretmanager.SecretManagerServiceClient()
+secret_name = "projects/1087274725247/secrets/django-key/versions/1"
+
+response = client.access_secret_version(name=secret_name)
+secret_data = response.payload.data.decode("UTF-8")
+
+# Cargar las credenciales de Google Cloud Storage desde el secreto
+credentials = json.loads(secret_data)
 
 MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
 
