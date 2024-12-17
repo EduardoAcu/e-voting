@@ -1,8 +1,7 @@
 from pathlib import Path
 import os
-from google.oauth2 import service_account
 from google.cloud import secretmanager
-from google.cloud import storage
+from google.oauth2 import service_account
 
 
 FERNET_KEY= b'7nFaVXOy7JgEXsB5Qwjycnetu8qsNjNUaIToIPnCkV8='
@@ -118,29 +117,24 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# Ruta al archivo de la cuenta de servicio con la clave privada
-service_account_file = '/home/eduardoignacio577/django-service-account.json'
+from google.cloud import secretmanager
+from google.oauth2 import service_account
 
-# Crear las credenciales usando el archivo de cuenta de servicio
-credentials = service_account.Credentials.from_service_account_file(service_account_file)
+# Cargar automáticamente las credenciales desde la variable de entorno
+client = secretmanager.SecretManagerServiceClient()
 
-# Crear el cliente de Secret Manager con las credenciales
-client = secretmanager.SecretManagerServiceClient(credentials=credentials)
-
-# Asegúrate de usar el formato correcto
-project_id = "1087274725247"  # Tu ID de proyecto de Google Cloud
-secret_name = "django-key"  # Nombre de tu secreto
-version = "3"  # O puedes usar el número de versión específico
-
-# Construir el nombre del secreto
-secret_version_name = f"projects/{project_id}/secrets/{secret_name}/versions/{version}"
+# Configura el nombre del secreto
+project_id = "e-voting-444918"
+secret_name = "django-key"
+version = "3"
 
 # Acceder al secreto
+secret_version_name = f"projects/{project_id}/secrets/{secret_name}/versions/{version}"
 response = client.access_secret_version(name=secret_version_name)
 
-# Extraer el valor del secreto
+# Obtener el valor del secreto
 secret_data = response.payload.data.decode("UTF-8")
-print(secret_data)
+print("Secreto:", secret_data)
 
 OTP = False
 OTP_EMAIL = "youremail@gmail.com"
