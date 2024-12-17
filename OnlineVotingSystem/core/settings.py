@@ -4,6 +4,7 @@ from google.cloud import secretmanager
 from google.cloud import storage
 from google.oauth2 import service_account
 
+
 FERNET_KEY= b'7nFaVXOy7JgEXsB5Qwjycnetu8qsNjNUaIToIPnCkV8='
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,7 +119,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 bucket_name = 'media-voting'
 
-json_blob_name = 'media-voting/e-voting-444918-bff424e804d7.json'
+json_blob_name = 'https://storage.cloud.google.com/media-voting/e-voting-444918-bff424e804d7.json'
 
 # Crear el cliente de Google Cloud Storage
 storage_client = storage.Client()
