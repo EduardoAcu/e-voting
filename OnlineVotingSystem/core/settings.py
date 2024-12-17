@@ -119,21 +119,13 @@ MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# Nombre del bucket y archivo
-bucket_name = 'media-voting'
-file_name = 'e-voting-444918-bff424e804d7.json'
-local_file_path = '/home/eduardoignacio577/django-service-account.json'
+# Ruta al archivo JSON de la cuenta de servicio
+service_account_file = "/home/eduardoignacio577/django-service-account.json"
 
-# Descargar el archivo desde el bucket
-storage_client = storage.Client()
-bucket = storage_client.bucket(bucket_name)
-blob = bucket.blob(file_name)
-blob.download_to_filename(local_file_path)
+# Cargar las credenciales desde el archivo
+credentials = service_account.Credentials.from_service_account_file(service_account_file)
 
-# Configurar las credenciales usando el archivo descargado
-credentials = service_account.Credentials.from_service_account_file(local_file_path)
-
-# Crear el cliente de Secret Manager con las credenciales correctas
+# Crear cliente de Secret Manager usando las credenciales
 client = secretmanager.SecretManagerServiceClient(credentials=credentials)
 
 # Configura el nombre del secreto
