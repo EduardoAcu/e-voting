@@ -102,15 +102,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-client = secretmanager.SecretManagerServiceClient()
-secret_name = "projects/1087274725247/secrets/django-key/versions/1"
-
-response = client.access_secret_version(name=secret_name)
-secret_data = response.payload.data.decode("UTF-8")
-
-# Cargar las credenciales de Google Cloud Storage desde el secreto
-credentials = json.loads(secret_data)
-
 MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(os.getenv('GOOGLE_BUCKET_NAME'))
 
 
@@ -121,7 +112,14 @@ STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 GOOGLE_BUCKET_NAME = 'django-voting'
 
-GOOGLE_APPLICATION_CREDENTIALS = '/OnlineVotingSystem/e-voting-444918-3d7d88efc1c7.json'
+client = secretmanager.SecretManagerServiceClient()
+secret_name = "projects/1087274725247/secrets/django-key/versions/1"
+
+response = client.access_secret_version(name=secret_name)
+secret_data = response.payload.data.decode("UTF-8")
+
+# Cargar las credenciales de Google Cloud Storage desde el secreto
+credentials = json.loads(secret_data)
 
 OTP = False
 OTP_EMAIL = "youremail@gmail.com"
